@@ -97,15 +97,13 @@ public class AgamaInjiVerificationServiceImpl extends AgamaInjiVerificationServi
         if (flowConfig.get("presentationDefinition") != null) {
             this.presentationDefinition = (HashMap<String, Object>) flowConfig.get("presentationDefinition");
         } else {
-            LogUtils.log("WARNING: 'presentationDefinition' is missing in configuration. Using default sample definition.");
-            this.presentationDefinition = getPresentationDefinitionSample();
+            LogUtils.log("ERROR: 'presentationDefinition' is missing in configuration. Please provide this value.");
         }
         
         if (flowConfig.get("clientMetadata") != null) {
             this.clientMetadata = (HashMap<String, Object>) flowConfig.get("clientMetadata");
         } else {
-            LogUtils.log("WARNING: 'clientMetadata' is missing in configuration. Using default metadata.");
-            this.clientMetadata = buildClientMetadata();
+            LogUtils.log("ERROR: 'clientMetadata' is missing in configuration. Please provide this value.");
         }
         
         if (flowConfig.get("agamaCallBackUrl") != null) {
@@ -376,73 +374,6 @@ public class AgamaInjiVerificationServiceImpl extends AgamaInjiVerificationServi
         return sis.getSessionId(CdiUtil.bean(HttpServletRequest.class));
     }   
     
-
-    private HashMap<String, Object> getPresentationDefinitionSample(){
-
-            HashMap<String, Object> presentationDefinition = new HashMap<>();
-            presentationDefinition.put("id", "c4822b58-7fb4-454e-b827-f8758fe27f9a");
-            presentationDefinition.put(
-                    "purpose",
-                    "Relying party is requesting your digital ID for the purpose of Self-Authentication"
-            );
-
-            presentationDefinition.put(
-                    "format",
-                    Map.of(
-                            "ldp_vc",
-                            Map.of("proof_type", new String[]{"Ed25519Signature2020"})
-                    )
-            );
-
-            presentationDefinition.put(
-                    "input_descriptors",
-                    new Object[]{
-                            Map.of(
-                                    "id", "id card credential",
-                                    "format", Map.of(
-                                            "ldp_vc",
-                                            Map.of("proof_type", new String[]{"RsaSignature2018"})
-                                    ),
-                                    "constraints", Map.of(
-                                            "fields", new Object[]{
-                                                    Map.of(
-                                                            "path", List.of("$.type"),
-                                                            "filter", Map.of(
-                                                                    "type", "object",
-                                                                    "pattern", "MOSIPVerifiableCredential"
-                                                            )
-                                                    )
-                                            }
-                                    )
-                            )
-                    }
-            );   
-            return presentationDefinition;     
-    }
-
-    private HashMap<String, Object> buildClientMetadata() {
-
-        HashMap<String, Object> clientMetadata = new HashMap<>();
-
-        clientMetadata.put("client_name", "Agama Application");
-        clientMetadata.put("logo_uri",
-                "https://mosip.github.io/inji-config/logos/StayProtectedInsurance.png");
-
-        HashMap<String, Object> ldpVp = new HashMap<>();
-        ldpVp.put("proof_type", List.of(
-                "Ed25519Signature2018",
-                "Ed25519Signature2020",
-                "RsaSignature2018"
-        ));
-
-        HashMap<String, Object> vpFormats = new HashMap<>();
-        vpFormats.put("ldp_vp", ldpVp);
-
-        clientMetadata.put("vp_formats", vpFormats);
-
-        return clientMetadata;
-    }
-
     @Override
     public Map<String, String> extractUserInfoFromVC() {
         LogUtils.log("INJI: Extract user info from VC: %", userInfoFromVc);
