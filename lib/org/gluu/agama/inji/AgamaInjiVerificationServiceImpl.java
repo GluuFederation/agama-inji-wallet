@@ -1,151 +1,170 @@
 package org.gluu.agama.inji;
 
-import io.jans.orm.exception.operation.EntryNotFoundException;
-import io.jans.as.common.model.common.User;
-import io.jans.as.common.service.common.UserService;
-import io.jans.as.common.util.CommonUtils;
-import io.jans.as.common.model.registration.Client;
-
-import io.jans.as.common.model.session.SessionId;
-import io.jans.as.server.service.SessionIdService;
-import jakarta.servlet.http.HttpServletRequest;
-import io.jans.service.net.NetworkService;
-import io.jans.service.cdi.util.CdiUtil;
 import io.jans.agama.engine.script.LogUtils;
-import io.jans.util.StringHelper;
-
-import io.jans.as.model.exception.InvalidJwtException;
-
+import io.jans.as.common.model.common.User;
+import io.jans.as.common.model.session.SessionId;
+import io.jans.as.common.service.common.UserService;
+import io.jans.as.server.service.SessionIdService;
 import io.jans.service.cdi.util.CdiUtil;
-import io.jans.as.server.service.ClientService;
-
-import io.jans.util.security.StringEncrypter.EncryptionException;
+import jakarta.servlet.http.HttpServletRequest;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import java.net.URI;
 import java.net.URLEncoder;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
-import java.security.SecureRandom;
-import java.text.MessageFormat;
-import java.net.URI;
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
-import java.time.temporal.ChronoUnit;
-import java.util.*;
-import java.io.*;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+/**
+ * Implementation of Agama Inji Verification Service for handling verifiable credentials
+ * and user authentication through the Inji platform.
+ */
+public class AgamaInjiVerificationServiceImpl extends AgamaInjiVerificationService {
 
-import org.gluu.agama.inji.AgamaInjiVerificationService;
-
-public class AgamaInjiVerificationServiceImpl extends AgamaInjiVerificationService{
-
+    // Attribute name constants
     private static final String INUM_ATTR = "inum";
     private static final String UID = "uid";
     private static final String MAIL = "mail";
-    private static final String CN = "cn";
     private static final String DISPLAY_NAME = "displayName";
     private static final String GIVEN_NAME = "givenName";
-    private static final String SN = "sn";
     private static final String VERIFIABLE_CREDENTIALS = "verifiableCredentials";
-    private String USER_INFO_FROM_VC = null;
-    private String VERIFIABLE_CREDENTIALS_JSON = null;
-    // private String INJI_API_ENDPOINT = "http://mmrraju-comic-pup.gluu.info/backend/consent/new";
-    private String INJI_BACKEND_BASE_URL = "https://injiverify.collab.mosip.net";
-    private String INJI_WEB_BASE_URL = "https://injiweb.collab.mosip.net";
-    private String  CLIENT_ID = "agama-app";
-    private Map<String, Object> AUTHORIZATION_DETAILS = new HashMap<>();
-    private String NONCE ;
-    private String RESPONSE_URL ;
-
-    public  String CALLBACK_URL= ""; // Agama call-back URL
-    private String RFAC_DEMO_BASE = "https://mmrraju-adapted-crab.gluu.info/inji-user.html"; // INJI RP URL.
-    private HashMap<String, Object> flowConfig ;
-    private HashMap<String, Object> PRESENATION_DEFINITION;
-    private HashMap<String, Object> CLIENT_METADATA;
-    private List<Map<String, Object>> CREDENTIAL_MAPPINGS;
-    private HashMap<String, String> VC_TO_GLUU_MAPPING; // Current credential mapping (NID by default)
+    
+    // Instance fields
     private static AgamaInjiVerificationServiceImpl INSTANCE = null;
+    
+    private String userInfoFromVc;
+    private String verifiableCredentialsJson;
+    private String injiBackendBaseUrl;
+    private String injiWebBaseUrl;
+    private String clientId = "agama-app";
+    private String callbackUrl = "";
+    
+    private Map<String, Object> authorizationDetails = new HashMap<>();
+    private HashMap<String, Object> flowConfig;
+    private HashMap<String, Object> presentationDefinition;
+    private HashMap<String, Object> clientMetadata;
+    private List<Map<String, Object>> credentialMappings;
+    private HashMap<String, String> vcToGluuMapping;
 
-    public AgamaInjiVerificationServiceImpl(){}
+    public AgamaInjiVerificationServiceImpl() {}
 
-    public AgamaInjiVerificationServiceImpl(HashMap config){
-        if(config != null){
-            LogUtils.log("Flow config provided is: %", config);
-            flowConfig = config;
-
-            this.INJI_BACKEND_BASE_URL = flowConfig.get("injiVerifyBaseURL") !=null ? flowConfig.get("injiVerifyBaseURL").toString() : INJI_BACKEND_BASE_URL;
-            this.INJI_WEB_BASE_URL = flowConfig.get("injiWebBaseURL") !=null ? flowConfig.get("injiWebBaseURL").toString() : INJI_WEB_BASE_URL;
-            this.CLIENT_ID = flowConfig.get("clientId") != null ? flowConfig.get("clientId").toString() : CLIENT_ID;
-            this.PRESENATION_DEFINITION = flowConfig.get("presentationDefinition") !=null ? (HashMap<String, Object>) flowConfig.get("presentationDefinition") : this.getPresentationDefinitionSample();
-            this.CLIENT_METADATA = flowConfig.get("clientMetadata")  !=null ? (HashMap<String, Object>) flowConfig.get("clientMetadata") : this.buildClientMetadata();
-            this.CALLBACK_URL = flowConfig.get("agamaCallBackUrl") != null ? flowConfig.get("agamaCallBackUrl").toString() : CALLBACK_URL;
-            
-            // Load credential mappings list
-            this.CREDENTIAL_MAPPINGS = flowConfig.get("credentialMappings") != null ? 
-                (List<Map<String, Object>>) flowConfig.get("credentialMappings") : new ArrayList<>();
-            
-            // Set default mapping to NID (first in list or fallback)
-            if (!this.CREDENTIAL_MAPPINGS.isEmpty()) {
-                Map<String, Object> nidMapping = this.CREDENTIAL_MAPPINGS.get(0);
-                this.VC_TO_GLUU_MAPPING = (HashMap<String, String>) nidMapping.get("vcToGluuMapping");
-                LogUtils.log("Loaded credential mapping for type: %", nidMapping.get("credentialType"));
-            } else {
-                // Fallback to old config format for backward compatibility
-                this.VC_TO_GLUU_MAPPING = flowConfig.get("vcToGluuMapping") != null ? 
-                    (HashMap<String, String>) flowConfig.get("vcToGluuMapping") : new HashMap<>();
-                LogUtils.log("Using legacy vcToGluuMapping configuration");
-            }
-        }else{
-            LogUtils.log("Error: No configuration provided using default may not work properly...");
+    /**
+     * Constructor with configuration map.
+     * 
+     * @param config Configuration map containing Inji service settings
+     */
+    public AgamaInjiVerificationServiceImpl(HashMap<String, Object> config) {
+        if (config == null) {
+            LogUtils.log("ERROR: No configuration provided. Service will not function properly.");
+            return;
         }
+        
+        LogUtils.log("Flow config provided is: %", config);
+        flowConfig = config;
 
-
+        // Validate and load required configuration
+        if (flowConfig.get("injiVerifyBaseURL") != null) {
+            this.injiBackendBaseUrl = flowConfig.get("injiVerifyBaseURL").toString();
+        } else {
+            LogUtils.log("ERROR: 'injiVerifyBaseURL' is missing in configuration. Please provide this value.");
+        }
+        
+        if (flowConfig.get("injiWebBaseURL") != null) {
+            this.injiWebBaseUrl = flowConfig.get("injiWebBaseURL").toString();
+        } else {
+            LogUtils.log("ERROR: 'injiWebBaseURL' is missing in configuration. Please provide this value.");
+        }
+        
+        if (flowConfig.get("clientId") != null) {
+            this.clientId = flowConfig.get("clientId").toString();
+        } else {
+            LogUtils.log("WARNING: 'clientId' is missing in configuration. Using default: 'agama-app'");
+            this.clientId = "agama-app";
+        }
+        
+        if (flowConfig.get("presentationDefinition") != null) {
+            this.presentationDefinition = (HashMap<String, Object>) flowConfig.get("presentationDefinition");
+        } else {
+            LogUtils.log("ERROR: 'presentationDefinition' is missing in configuration. Please provide this value.");
+        }
+        
+        if (flowConfig.get("clientMetadata") != null) {
+            this.clientMetadata = (HashMap<String, Object>) flowConfig.get("clientMetadata");
+        } else {
+            LogUtils.log("ERROR: 'clientMetadata' is missing in configuration. Please provide this value.");
+        }
+        
+        if (flowConfig.get("agamaCallBackUrl") != null) {
+            this.callbackUrl = flowConfig.get("agamaCallBackUrl").toString();
+        } else {
+            LogUtils.log("ERROR: 'agamaCallBackUrl' is missing in configuration. Please provide this value.");
+        }
+        
+        // Load credential mappings list
+        if (flowConfig.get("credentialMappings") != null) {
+            this.credentialMappings = (List<Map<String, Object>>) flowConfig.get("credentialMappings");
+        } else {
+            this.credentialMappings = new ArrayList<>();
+            LogUtils.log("ERROR: 'credentialMappings' is missing in configuration. Please provide credential mappings.");
+        }
+        
+        // Set default mapping to first credential type in list
+        if (!this.credentialMappings.isEmpty()) {
+            Map<String, Object> defaultMapping = this.credentialMappings.get(0);
+            this.vcToGluuMapping = (HashMap<String, String>) defaultMapping.get("vcToGluuMapping");
+            LogUtils.log("Loaded credential mapping for type: %", defaultMapping.get("credentialType"));
+        } else {
+            this.vcToGluuMapping = new HashMap<>();
+            LogUtils.log("WARNING: No credential mappings configured. Credential extraction will not work.");
+        }
     }
 
-    public static synchronized AgamaInjiVerificationServiceImpl getInstance(HashMap config)
-    {
-        
-        if (INSTANCE == null)
+    /**
+     * Gets singleton instance of the service.
+     * 
+     * @param config Configuration map
+     * @return Singleton instance
+     */
+    public static synchronized AgamaInjiVerificationServiceImpl getInstance(HashMap<String, Object> config) {
+        if (INSTANCE == null) {
             INSTANCE = new AgamaInjiVerificationServiceImpl(config);
+        }
         return INSTANCE;
     } 
 
     @Override
     public Map<String, Object> createVpVerificationRequest() {
-
         Map<String, Object> responseMap = new HashMap<>();
 
         try {
-            // LogUtils.log("Retrieve  session...");
             Map<String, String> sessionAttrs = getSessionId().getSessionAttributes();
-
             LogUtils.log(sessionAttrs);
-            String clientId = sessionAttrs.get("client_id");
-            // this.CLIENT_ID = clientId;
+            
             LogUtils.log("Create VP Verification Request...");
             Map<String, Object> requestPayload = new HashMap<>();
-            requestPayload.put("clientId", CLIENT_ID);
-            requestPayload.put("presentationDefinition", PRESENATION_DEFINITION);
+            requestPayload.put("clientId", clientId);
+            requestPayload.put("presentationDefinition", presentationDefinition);
+            
             String jsonPayload = new ObjectMapper().writeValueAsString(requestPayload);
             LogUtils.log("Payload object: %", requestPayload);
             LogUtils.log("Payload JSON: %", jsonPayload);
-            String endpoint = this.INJI_BACKEND_BASE_URL + "/v1/verify/vp-request";
-
+            
+            String endpoint = this.injiBackendBaseUrl + "/v1/verify/vp-request";
             
             HttpClient httpClient = HttpClient.newBuilder()
-                    .followRedirects(HttpClient.Redirect.NORMAL) 
+                    .followRedirects(HttpClient.Redirect.NORMAL)
                     .build();
 
             HttpRequest request = HttpRequest.newBuilder()
@@ -162,34 +181,36 @@ public class AgamaInjiVerificationServiceImpl extends AgamaInjiVerificationServi
             if (response.statusCode() == 200 || response.statusCode() == 201) {
                 String jsonResponse = response.body();
                 LogUtils.log("INJI Verify Backend Response: %", jsonResponse);
+                
                 ObjectMapper mapper = new ObjectMapper();
                 Map<String, Object> data = mapper.readValue(jsonResponse, Map.class);
 
                 if (data == null || !data.containsKey("requestId") || !data.containsKey("transactionId")) {
-                    LogUtils.log("ERROR: Missing Data from INJI backend Response response");
+                    LogUtils.log("ERROR: Missing Data from INJI backend response");
                     responseMap.put("valid", false);
                     responseMap.put("message", "ERROR: Missing Data from INJI Verify backend response");
-                }  
+                    return responseMap;
+                }
+                
                 String transactionId = (String) data.get("transactionId");
                 String requestId = (String) data.get("requestId");
-                this.AUTHORIZATION_DETAILS = (Map<String, Object>) data.get("authorizationDetails");
-                LogUtils.log("Authorization details : %", this.AUTHORIZATION_DETAILS);
+                this.authorizationDetails = (Map<String, Object>) data.get("authorizationDetails");
+                
+                LogUtils.log("Authorization details: %", this.authorizationDetails);
+                
                 responseMap.put("valid", true);
-                responseMap.put("message", "INJI Verify Backed System response is satisfy");
+                responseMap.put("message", "INJI Verify Backend System response is satisfactory");
                 responseMap.put("requestId", requestId);
                 responseMap.put("transactionId", transactionId);
-                return responseMap;               
-           
-            }else{
+                return responseMap;
+            } else {
                 LogUtils.log("ERROR: INJI Verify returned status code: %", response.statusCode());
                 responseMap.put("valid", false);
-
-                responseMap.put("message", "ERROR: INJI BACKEND returned status code: % "+response.statusCode());
+                responseMap.put("message", "ERROR: INJI BACKEND returned status code: " + response.statusCode());
                 return responseMap;
             }
-
-
         } catch (Exception e) {
+            LogUtils.log("ERROR: Exception in createVpVerificationRequest: %", e.getMessage());
             responseMap.put("valid", false);
             responseMap.put("message", e.getMessage());
         }
@@ -201,33 +222,29 @@ public class AgamaInjiVerificationServiceImpl extends AgamaInjiVerificationServi
     @Override
     public String buildInjiWebAuthorizationUrl(String requestId, String transactionId) {
         try {
-            LogUtils.log("Preparing Inji web Authorization Url...");
+            LogUtils.log("Preparing Inji web Authorization URL...");
 
-            String nonce = this.AUTHORIZATION_DETAILS.get("nonce").toString();
-            // LogUtils.log("NONCE : %", nonce);
-            String baseUrl = this.INJI_WEB_BASE_URL + "/authorize";
+            String nonce = this.authorizationDetails.get("nonce").toString();
+            String baseUrl = this.injiWebBaseUrl + "/authorize";
 
-            String presentationDefinitionJson = new JSONObject(this.AUTHORIZATION_DETAILS.get("presentationDefinition")).toString();
-            // LogUtils.log("Presentation defenation: %", presentationDefinitionJson);
-            String clientMetadataJson = new JSONObject(this.CLIENT_METADATA).toString();
+            String presentationDefinitionJson = new JSONObject(
+                this.authorizationDetails.get("presentationDefinition")).toString();
+            String clientMetadataJson = new JSONObject(this.clientMetadata).toString();
 
-            // LogUtils.log(clientMetadataJson);
             String url = baseUrl +
-                    "?client_id=" + URLEncoder.encode(CLIENT_ID, StandardCharsets.UTF_8) +
+                    "?client_id=" + URLEncoder.encode(clientId, StandardCharsets.UTF_8) +
                     "&presentation_definition=" + URLEncoder.encode(presentationDefinitionJson, StandardCharsets.UTF_8) +
                     "&nonce=" + URLEncoder.encode(nonce, StandardCharsets.UTF_8) +
-                    "&response_uri=" + URLEncoder.encode((String) this.AUTHORIZATION_DETAILS.get("responseUri"), StandardCharsets.UTF_8) +
-                    "&redirect_uri=" + URLEncoder.encode(this.CALLBACK_URL, StandardCharsets.UTF_8) +
-                    "&response_type=" +this.AUTHORIZATION_DETAILS.get("responseType")  +
-                    "&response_mode=" + this.AUTHORIZATION_DETAILS.get("responseMode") +
+                    "&response_uri=" + URLEncoder.encode((String) this.authorizationDetails.get("responseUri"), StandardCharsets.UTF_8) +
+                    "&redirect_uri=" + URLEncoder.encode(this.callbackUrl, StandardCharsets.UTF_8) +
+                    "&response_type=" + this.authorizationDetails.get("responseType") +
+                    "&response_mode=" + this.authorizationDetails.get("responseMode") +
                     "&client_id_scheme=pre-registered" +
                     "&state=" + URLEncoder.encode(requestId, StandardCharsets.UTF_8) +
                     "&client_metadata=" + URLEncoder.encode(clientMetadataJson, StandardCharsets.UTF_8);
 
-            LogUtils.log("URL : %", url);
+            LogUtils.log("URL: %", url);
             return url;
-            // return RFAC_DEMO_BASE;
-
         } catch (Exception e) {
             LogUtils.log("ERROR: Failed to build Inji Web Authorization URL: %", e.getMessage());
             return null;
@@ -267,13 +284,13 @@ public class AgamaInjiVerificationServiceImpl extends AgamaInjiVerificationServi
     
     private String checkTransactionIdStatus(String transactionId) {
         try {
-            LogUtils.log("Validating VP TRANSACTION ID STATUS for : %", transactionId);
-            String apiUrl = this.INJI_BACKEND_BASE_URL + "/v1/verify/vp-result/" + transactionId;
-            // String apiUrl = "http://mmrraju-comic-pup.gluu.info/account-access-consents/" + "intent-id-123456";
+            LogUtils.log("Validating VP TRANSACTION ID STATUS for: %", transactionId);
+            String apiUrl = this.injiBackendBaseUrl + "/v1/verify/vp-result/" + transactionId;
 
             HttpClient httpClient = HttpClient.newBuilder()
                     .followRedirects(HttpClient.Redirect.NORMAL)
                     .build();
+                    
             HttpRequest request = HttpRequest.newBuilder()
                     .uri(URI.create(apiUrl))
                     .header("Accept", "application/json")
@@ -285,31 +302,27 @@ public class AgamaInjiVerificationServiceImpl extends AgamaInjiVerificationServi
             HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
 
             if (response.statusCode() == 200) {
-                // LogUtils.log("INJI VERIFY BACKEND RESPONSE FOR TRANSACTION-ID : %", response.body());
                 ObjectMapper mapper = new ObjectMapper();
                 Map<String, Object> data = mapper.readValue(response.body(), Map.class);
-                // Map<String, Object> data = (Map<String, Object>) mapData.get("Data");
 
-                if (data != null || data.containsKey("vpResultStatus")) {
+                if (data != null && data.containsKey("vpResultStatus")) {
                     List<Map<String, Object>> vcResults = (List<Map<String, Object>>) data.get("vcResults");
                     String vc = (String) vcResults.get(0).get("vc");
-                    this.USER_INFO_FROM_VC = vc;
-                    LogUtils.log("INJI : VC info -- %", vc);
+                    this.userInfoFromVc = vc;
+                    LogUtils.log("INJI: VC info -- %", vc);
+                    
                     // Store verifiable credentials as JSON
-                    this.VERIFIABLE_CREDENTIALS_JSON = buildVerifiableCredentialsJson(vcResults);
-                    LogUtils.log("Stored verifiable credentials JSON: %", this.VERIFIABLE_CREDENTIALS_JSON);
+                    this.verifiableCredentialsJson = buildVerifiableCredentialsJson(vcResults);
+                    LogUtils.log("Stored verifiable credentials JSON: %", this.verifiableCredentialsJson);
                     
                     return data.get("vpResultStatus").toString();
                 } else {
                     return "UNKNOWN";
                 }
-            }else{
+            } else {
                 LogUtils.log("ERROR: INJI VP TOKEN FOR TRANSACTION ID status code: %", response.statusCode());
                 return "UNKNOWN";
             }
-
-            
-
         } catch (Exception e) {
             LogUtils.log("ERROR: Exception in checkTransactionIdStatus: %", e.getMessage());
             return "UNKNOWN";
@@ -318,9 +331,9 @@ public class AgamaInjiVerificationServiceImpl extends AgamaInjiVerificationServi
 
     private String checkRequestIdStatus(String requestId) {
         try {
-
-            LogUtils.log("Validating VP REQUEST STATUS for : %", requestId);
-            String apiUrl = this.INJI_BACKEND_BASE_URL + "/v1/verify/vp-request/" + requestId + "/status";
+            LogUtils.log("Validating VP REQUEST STATUS for: %", requestId);
+            String apiUrl = this.injiBackendBaseUrl + "/v1/verify/vp-request/" + requestId + "/status";
+            
             HttpClient httpClient = HttpClient.newBuilder()
                     .followRedirects(HttpClient.Redirect.NORMAL)
                     .build();
@@ -335,18 +348,18 @@ public class AgamaInjiVerificationServiceImpl extends AgamaInjiVerificationServi
 
             HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
 
-            if (response.statusCode()== 200) {
-                LogUtils.log("INJI VERIFY BACKEND RESPONSE FOR REQUEST-ID : %", response.body());
+            if (response.statusCode() == 200) {
+                LogUtils.log("INJI VERIFY BACKEND RESPONSE FOR REQUEST-ID: %", response.body());
                 ObjectMapper mapper = new ObjectMapper();
                 Map<String, Object> data = mapper.readValue(response.body(), Map.class);
 
-                if (data != null || data.containsKey("status")) {
-                    LogUtils.log("VP REQUEST STATUS : %", data.get("status") );
+                if (data != null && data.containsKey("status")) {
+                    LogUtils.log("VP REQUEST STATUS: %", data.get("status"));
                     return data.get("status").toString();
                 } else {
                     return "UNKNOWN";
                 }
-            }else{
+            } else {
                 LogUtils.log("ERROR: VP Request status code: %", response.statusCode());
                 return "UNKNOWN";
             }
@@ -361,103 +374,31 @@ public class AgamaInjiVerificationServiceImpl extends AgamaInjiVerificationServi
         return sis.getSessionId(CdiUtil.bean(HttpServletRequest.class));
     }   
     
-
-    private HashMap<String, Object> getPresentationDefinitionSample(){
-
-            Map<String, Object> presentationDefinition = new HashMap<>();
-            presentationDefinition.put("id", "c4822b58-7fb4-454e-b827-f8758fe27f9a");
-            presentationDefinition.put(
-                    "purpose",
-                    "Relying party is requesting your digital ID for the purpose of Self-Authentication"
-            );
-
-            presentationDefinition.put(
-                    "format",
-                    Map.of(
-                            "ldp_vc",
-                            Map.of("proof_type", new String[]{"Ed25519Signature2020"})
-                    )
-            );
-
-            presentationDefinition.put(
-                    "input_descriptors",
-                    new Object[]{
-                            Map.of(
-                                    "id", "id card credential",
-                                    "format", Map.of(
-                                            "ldp_vc",
-                                            Map.of("proof_type", new String[]{"RsaSignature2018"})
-                                    ),
-                                    "constraints", Map.of(
-                                            "fields", new Object[]{
-                                                    Map.of(
-                                                            "path", List.of('$.type'),
-                                                            "filter", Map.of(
-                                                                    "type", "object",
-                                                                    "pattern", "MOSIPVerifiableCredential"
-                                                            )
-                                                    )
-                                            }
-                                    )
-                            )
-                    }
-            );   
-            return presentationDefinition;     
-    }
-
-    private HashMap<String, Object> buildClientMetadata() {
-
-        HashMap<String, Object> clientMetadata = new HashMap<>();
-
-        clientMetadata.put("client_name", "Agama Application");
-        clientMetadata.put("logo_uri",
-                "https://mosip.github.io/inji-config/logos/StayProtectedInsurance.png");
-
-        HashMap<String, Object> ldpVp = new HashMap<>();
-        ldpVp.put("proof_type", List.of(
-                "Ed25519Signature2018",
-                "Ed25519Signature2020",
-                "RsaSignature2018"
-        ));
-
-        HashMap<String, Object> vpFormats = new HashMap<>();
-        vpFormats.put("ldp_vp", ldpVp);
-
-        clientMetadata.put("vp_formats", vpFormats);
-
-        return clientMetadata;
-    }
-
     @Override
     public Map<String, String> extractUserInfoFromVC() {
-        LogUtils.log("INJI : Extract user info from VC : %", USER_INFO_FROM_VC);
+        LogUtils.log("INJI: Extract user info from VC: %", userInfoFromVc);
         ObjectMapper mapper = new ObjectMapper();
         Map<String, String> gluuAttrs = new HashMap<>();
 
-        if (USER_INFO_FROM_VC == null) {
+        if (userInfoFromVc == null) {
             LogUtils.log("Error: No user info found from VC");
             return gluuAttrs;
         }
 
         try {
-            Map<String, Object> vcMap =
-                    mapper.readValue(USER_INFO_FROM_VC, Map.class);
-
-            Map<String, Object> credentialSubject =
-                    (Map<String, Object>) vcMap.get("credentialSubject");
+            Map<String, Object> vcMap = mapper.readValue(userInfoFromVc, Map.class);
+            Map<String, Object> credentialSubject = (Map<String, Object>) vcMap.get("credentialSubject");
 
             if (credentialSubject == null) {
                 LogUtils.log("Error: credentialSubject missing in VC");
                 return gluuAttrs;
             }
 
-            for (Map.Entry<String, String> entry : VC_TO_GLUU_MAPPING.entrySet()) {
-
+            for (Map.Entry<String, String> entry : vcToGluuMapping.entrySet()) {
                 String vcClaimName = entry.getKey();
                 String gluuAttrName = entry.getValue();
 
                 if (credentialSubject.containsKey(vcClaimName)) {
-
                     Object vcValue = credentialSubject.get(vcClaimName);
                     String normalizedValue = extractVcValue(vcValue);
 
@@ -466,7 +407,6 @@ public class AgamaInjiVerificationServiceImpl extends AgamaInjiVerificationServi
                     }
                 }
             }
-
         } catch (Exception e) {
             LogUtils.log("Error parsing VC user info: %", e.getMessage());
         }
@@ -534,9 +474,9 @@ public class AgamaInjiVerificationServiceImpl extends AgamaInjiVerificationServi
             }
             
             // Handle verifiable credentials update
-            if (this.VERIFIABLE_CREDENTIALS_JSON != null) {
+            if (this.verifiableCredentialsJson != null) {
                 String existingCredentials = getSingleValuedAttr(user, VERIFIABLE_CREDENTIALS);
-                String mergedCredentials = mergeVerifiableCredentials(existingCredentials, this.VERIFIABLE_CREDENTIALS_JSON);
+                String mergedCredentials = mergeVerifiableCredentials(existingCredentials, this.verifiableCredentialsJson);
                 
                 // Update user with merged credentials
                 user.setAttribute(VERIFIABLE_CREDENTIALS, mergedCredentials);
@@ -567,15 +507,14 @@ public class AgamaInjiVerificationServiceImpl extends AgamaInjiVerificationServi
     @Override
     public Map<String, String> onboardUser(Map<String, String> userInfo, String password) {
         try {
-            Map<String, String> gluuAttrs = userInfo;
-            LogUtils.log("User registration data: %", gluuAttrs);
+            LogUtils.log("User registration data: %", userInfo);
 
-            if (gluuAttrs.isEmpty()) {
+            if (userInfo.isEmpty()) {
                 LogUtils.log("Error: No user data provided");
                 return Collections.emptyMap();
             }
 
-            String email = gluuAttrs.get("mail");
+            String email = userInfo.get("mail");
             if (email == null || !email.contains("@")) {
                 LogUtils.log("Error: Email missing or invalid");
                 return Collections.emptyMap();
@@ -587,19 +526,21 @@ public class AgamaInjiVerificationServiceImpl extends AgamaInjiVerificationServi
             }
 
             User newUser = new User();
-            String uid = email;  // Use full email as UID
+            String uid = email;
             newUser.setAttribute(UID, uid);
-            
-            // Set password
             newUser.setAttribute("userPassword", password);
             
-            // Set all attributes from gluuAttrs dynamically
-            for (Map.Entry<String, String> entry : gluuAttrs.entrySet()) {
+            // Set all attributes from userInfo dynamically
+            for (Map.Entry<String, String> entry : userInfo.entrySet()) {
                 String attrName = entry.getKey();
                 String attrValue = entry.getValue();
 
-                if (UID.equals(attrName) || "password".equals(attrName) || "confirmPassword".equals(attrName)) continue;
-                if (VERIFIABLE_CREDENTIALS.equals(attrName)) continue; // Skip, will handle separately
+                if (UID.equals(attrName) || "password".equals(attrName) || "confirmPassword".equals(attrName)) {
+                    continue;
+                }
+                if (VERIFIABLE_CREDENTIALS.equals(attrName)) {
+                    continue;
+                }
                 
                 if ("birthdate".equals(attrName)) {
                     try {
@@ -614,16 +555,17 @@ public class AgamaInjiVerificationServiceImpl extends AgamaInjiVerificationServi
                 }
             }
             
-            if (gluuAttrs.get(DISPLAY_NAME) != null) {
-                newUser.setAttribute(GIVEN_NAME, gluuAttrs.get(DISPLAY_NAME));
+            if (userInfo.get(DISPLAY_NAME) != null) {
+                newUser.setAttribute(GIVEN_NAME, userInfo.get(DISPLAY_NAME));
             }
             
             // Store verifiable credentials JSON if available
-            if (this.VERIFIABLE_CREDENTIALS_JSON != null) {
-                newUser.setAttribute(VERIFIABLE_CREDENTIALS, this.VERIFIABLE_CREDENTIALS_JSON);
+            if (this.verifiableCredentialsJson != null) {
+                newUser.setAttribute(VERIFIABLE_CREDENTIALS, this.verifiableCredentialsJson);
                 LogUtils.log("Added verifiable credentials to user profile");
             }
-            LogUtils.log("Final USER : % ", newUser);
+            
+            LogUtils.log("Final USER: %", newUser);
             UserService userService = CdiUtil.bean(UserService.class);
             newUser = userService.addUser(newUser, true);
 
@@ -634,31 +576,21 @@ public class AgamaInjiVerificationServiceImpl extends AgamaInjiVerificationServi
 
             LogUtils.log("New user added");
 
-            // User updateUser = getUser(MAIL, email);
-            
-            // updateUser.setAttribute("userPassword", password);
-
-            // updatedUser = userService.updateUser(updateUser);
-            
-            // LogUtils.log("User update with password : %", updatedUser);
-
             String inum = getSingleValuedAttr(newUser, INUM_ATTR);
             String firstName = getSingleValuedAttr(newUser, GIVEN_NAME);
 
-            Map<String, String> result = new HashMap<>(gluuAttrs);
+            Map<String, String> result = new HashMap<>(userInfo);
             result.put(UID, uid);
             result.put(INUM_ATTR, inum);
             result.put(GIVEN_NAME, firstName);
             return result;
-
         } catch (Exception e) {
-            LogUtils.log("Error : %", e);
+            LogUtils.log("Error in onboardUser: %", e.getMessage());
+            return Collections.emptyMap();
         }
-        
     }
 
     private String extractVcValue(Object vcValue) {
-
         if (vcValue == null) {
             return null;
         }
@@ -669,11 +601,8 @@ public class AgamaInjiVerificationServiceImpl extends AgamaInjiVerificationServi
 
         if (vcValue instanceof List) {
             List<?> list = (List<?>) vcValue;
-
             if (!list.isEmpty() && list.get(0) instanceof Map) {
-                Map<String, Object> obj =
-                        (Map<String, Object>) list.get(0);
-
+                Map<String, Object> obj = (Map<String, Object>) list.get(0);
                 Object value = obj.get("value");
                 if (value != null) {
                     return value.toString();
@@ -681,17 +610,7 @@ public class AgamaInjiVerificationServiceImpl extends AgamaInjiVerificationServi
             }
         }
 
-        // Case 3: Fallback
         return vcValue.toString();
-    }
-
-    private String parseBirthdate(String dob) {
-        if (dob == null || dob.isBlank()) {
-            return null;
-        }
-        return dob.replace('/', '-');
-        // LocalDate localDate = LocalDate.parse(dob.replace('/', '-')); // parses yyyy-MM-dd
-        // return Timestamp.valueOf(localDate);
     }
 
     private static User getUser(String attributeName, String value) {
@@ -802,10 +721,8 @@ public class AgamaInjiVerificationServiceImpl extends AgamaInjiVerificationServi
     }
 
     private String getSingleValuedAttr(User user, String attribute) {
-
         Object value = null;
         if (attribute.equals(UID)) {
-            //user.getAttribute("uid", true, false) always returns null :(
             value = user.getUserId();
         } else {
             value = user.getAttribute(attribute, true, false);
@@ -816,7 +733,6 @@ public class AgamaInjiVerificationServiceImpl extends AgamaInjiVerificationServi
             if (value instanceof String) {
                 return (String) value;
             } else {
-                // If it's returned as a Map or other object, convert to JSON string
                 try {
                     ObjectMapper mapper = new ObjectMapper();
                     return mapper.writeValueAsString(value);
@@ -828,7 +744,6 @@ public class AgamaInjiVerificationServiceImpl extends AgamaInjiVerificationServi
         }
         
         return value == null ? null : value.toString();
-
     }
 
     public boolean removeCredentialType(String email, String credentialType) {
