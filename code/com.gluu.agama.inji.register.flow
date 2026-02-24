@@ -7,4 +7,6 @@ Flow com.gluu.agama.inji.register
 Log "@info Starting registration flow for new user"
 feedback = {}
 // Create service instance
-agamaInjiVerificationService = Call org.gluu.agama.inji.AgamaInjiVerificationService#getInstance feedback
+agamaInjiVerificationService = Call org.gluu.agama.inji.AgamaInjiVerificationService#getInstance conf
+// Show user setup page to review info and set password
+Log "@info Showing user registration form with data : %" vcUserInfo
