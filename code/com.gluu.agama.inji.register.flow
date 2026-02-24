@@ -16,6 +16,15 @@ When userSetupData is not null
      Log "@info Creating user with provided data and password"
      // OnBoard User to Jans Server with all data including password
      user = Call agamaInjiVerificationService onboardUser userSetupData userSetupData.password
+     // If user is not null
+     When user is not null
+          // user onboard success
+          Log "@info  User onboard success with password"
+          // Acknowledge
+          ack = RRF "acknowledge.ftlh" 
+          // Flow finish successfully
+          it_xmqfx = {success:true, data: { userId: user.uid, mail: user.mail, displayName: user.displayName, givenName: user.givenName}}
+          Finish it_xmqfx
 Otherwise
      // Password not provided"
      Log "@info Password not provided"
