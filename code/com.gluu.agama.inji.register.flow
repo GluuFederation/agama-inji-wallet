@@ -6,3 +6,5 @@ Flow com.gluu.agama.inji.register
 // Flow for registering new users
 Log "@info Starting registration flow for new user"
 feedback = {}
+// Create service instance
+agamaInjiVerificationService = Call org.gluu.agama.inji.AgamaInjiVerificationService#getInstance feedback
