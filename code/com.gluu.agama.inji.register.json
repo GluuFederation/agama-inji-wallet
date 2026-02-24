@@ -1,0 +1,36 @@
+{
+  "nodes": [
+    {
+      "id": "startNode-98a08451-8948-4c58-94fb-17c83eb17553",
+      "type": "startNode",
+      "sourcePosition": "right",
+      "position": {
+        "x": 30,
+        "y": 30
+      },
+      "deletable": false,
+      "data": {
+        "id": "startNode-98a08451-8948-4c58-94fb-17c83eb17553",
+        "type": "startNode",
+        "position": {
+          "x": 30,
+          "y": 40
+        },
+        "agamaData": {
+          "isTopLevelFlow": true,
+          "basepath": "",
+          "configParams": "{}",
+          "nodeIcon": "material-symbols:line-start-square",
+          "timeout": "",
+          "inputs": "",
+          "configs": "",
+          "flowname": "com.gluu.agama.inji.register",
+          "displayName": "Register Flow",
+          "creationDate": "24/02/2026",
+          "hasComment": true,
+          "comment": ""
+        }
+      }
+    }
+  ]
+}
