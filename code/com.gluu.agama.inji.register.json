@@ -26,7 +26,7 @@
 					"configs": "conf",
 					"displayName": "",
 					"hasComment": true,
-					"comment": "",
+					"comment": "Registration flow",
 					"flowname": "com.gluu.agama.inji.register",
 					"flowName": "com.gluu.agama.inji.register"
 				}
@@ -35,7 +35,7 @@
 				"width": 168,
 				"height": 120
 			},
-			"selected": false
+			"selected": true
 		},
 		{
 			"id": "logNode-6ee27945-0c27-417c-bde1-c75cfd1824ce",
@@ -68,7 +68,7 @@
 				"width": 170,
 				"height": 124
 			},
-			"selected": true
+			"selected": false
 		}
 	],
 	"edges": [
