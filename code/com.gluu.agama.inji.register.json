@@ -392,6 +392,47 @@
 				"width": 170,
 				"height": 124
 			},
+			"selected": false
+		},
+		{
+			"id": "callNode-d0812e5b-4d45-40d4-87a0-16970324d678",
+			"type": "callNode",
+			"position": {
+				"x": 2030,
+				"y": 298
+			},
+			"data": {
+				"id": "callNode-d0812e5b-4d45-40d4-87a0-16970324d678",
+				"type": "callNode",
+				"position": {
+					"x": 2030,
+					"y": 298
+				},
+				"previousNodeId": "logNode-539d9e9e-da89-477b-97c5-d67d8e62456b",
+				"agamaData": {
+					"javaClassName": "",
+					"javaMethodName": "onboardUser",
+					"javaVariableName": "agamaInjiVerificationService",
+					"exceptionVariableField": "",
+					"callType": "Call method on instance",
+					"arguments": [
+						"userSetupData",
+						"userSetupData.password"
+					],
+					"nodeIcon": "material-symbols:code",
+					"nodeColor": "",
+					"titleColor": "",
+					"descColor": "",
+					"displayName": "",
+					"hasComment": true,
+					"comment": "OnBoard User to Jans Server with all data including password",
+					"asssignedVariableName": "user"
+				}
+			},
+			"measured": {
+				"width": 170,
+				"height": 124
+			},
 			"selected": true
 		}
 	],
@@ -547,11 +588,30 @@
 			},
 			"labelShowBg": true,
 			"sourceHandle": "source_whenNode-b2cae871-2d80-4c79-8cb9-9c49bf2532fa_otherwise"
+		},
+		{
+			"id": "logNode-539d9e9e-da89-477b-97c5-d67d8e62456b-callNode-d0812e5b-4d45-40d4-87a0-16970324d678",
+			"type": "default",
+			"source": "logNode-539d9e9e-da89-477b-97c5-d67d8e62456b",
+			"target": "callNode-d0812e5b-4d45-40d4-87a0-16970324d678",
+			"labelBgPadding": [
+				8,
+				4
+			],
+			"labelBgBorderRadius": 4,
+			"label": "",
+			"labelBgStyle": {
+				"fill": "#009688",
+				"color": "#ffffff",
+				"fillOpacity": 0.7
+			},
+			"labelShowBg": true,
+			"sourceHandle": "source_logNode-539d9e9e-da89-477b-97c5-d67d8e62456b"
 		}
 	],
 	"viewport": {
-		"x": -1170,
-		"y": 194,
+		"x": -1568,
+		"y": 22,
 		"zoom": 1
 	}
 }
