@@ -23,8 +23,12 @@ When userSetupData is not null
           // Acknowledge
           ack = RRF "acknowledge.ftlh" 
           // Flow finish successfully
-          it_xmqfx = {success:true, data: { userId: user.uid, mail: user.mail, displayName: user.displayName, givenName: user.givenName}}
-          Finish it_xmqfx
+          it_ydclv = {success:true, data: { userId: user.uid, mail: user.mail, displayName: user.displayName, givenName: user.givenName}}
+          Finish it_ydclv
+     Otherwise
+          // Failed to onboard user
+          Log "@info Failed to onboard user"
+          feedback.errorMessage = "Failed to create user account"
 Otherwise
      // Password not provided"
      Log "@info Password not provided"
