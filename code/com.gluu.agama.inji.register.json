@@ -1,4 +1,47 @@
 {
-  "nodes": [],
-  "edges": []
+	"nodes": [
+		{
+			"id": "startNode-f8499abb-5a30-4287-9e07-9852a9191bad",
+			"type": "startNode",
+			"sourcePosition": "right",
+			"position": {
+				"x": 30,
+				"y": 40
+			},
+			"deletable": false,
+			"data": {
+				"id": "startNode-f8499abb-5a30-4287-9e07-9852a9191bad",
+				"type": "startNode",
+				"position": {
+					"x": 30,
+					"y": 40
+				},
+				"agamaData": {
+					"isTopLevelFlow": true,
+					"basepath": "",
+					"configParams": {},
+					"nodeIcon": "material-symbols:line-start-square",
+					"timeout": "",
+					"inputs": "vcUserInfo",
+					"configs": "conf",
+					"displayName": "",
+					"hasComment": true,
+					"comment": "",
+					"flowname": "com.gluu.agama.inji.register",
+					"flowName": "com.gluu.agama.inji.register"
+				}
+			},
+			"measured": {
+				"width": 170,
+				"height": 124
+			},
+			"selected": true
+		}
+	],
+	"edges": [],
+	"viewport": {
+		"x": 0,
+		"y": 0,
+		"zoom": 1
+	}
 }
