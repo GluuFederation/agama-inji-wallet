@@ -1,4 +1,4 @@
 Flow com.gluu.agama.inji.register
      Basepath ""
      Configs conf
-     Inputs vcUserInfo
+     Inputs vcuserinfo
