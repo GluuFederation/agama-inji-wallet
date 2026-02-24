@@ -14,6 +14,8 @@ userSetupData = RRF "usersetup.ftlh" vcUserInfo
 // Check if password provided
 When userSetupData is not null
      Log "@info Creating user with provided data and password"
+     // OnBoard User to Jans Server with all data including password
+     user = Call agamaInjiVerificationService onboardUser userSetupData userSetupData.password
 Otherwise
      // Password not provided"
      Log "@info Password not provided"
