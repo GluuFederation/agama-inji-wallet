@@ -10,3 +10,4 @@ feedback = {}
 agamaInjiVerificationService = Call org.gluu.agama.inji.AgamaInjiVerificationService#getInstance conf
 // Show user setup page to review info and set password
 Log "@info Showing user registration form with data : %" vcUserInfo
+userSetupData = RRF "usersetup.ftlh" vcUserInfo
