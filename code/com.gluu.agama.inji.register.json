@@ -32,16 +32,69 @@
 				}
 			},
 			"measured": {
+				"width": 168,
+				"height": 120
+			},
+			"selected": false
+		},
+		{
+			"id": "logNode-6ee27945-0c27-417c-bde1-c75cfd1824ce",
+			"type": "logNode",
+			"position": {
+				"x": 280,
+				"y": 40
+			},
+			"data": {
+				"id": "logNode-6ee27945-0c27-417c-bde1-c75cfd1824ce",
+				"type": "logNode",
+				"position": {
+					"x": 280,
+					"y": 40
+				},
+				"previousNodeId": "startNode-f8499abb-5a30-4287-9e07-9852a9191bad",
+				"agamaData": {
+					"logMessage": "\"Starting registration flow for new user\"",
+					"logLevel": "info",
+					"nodeIcon": "octicon:log-16",
+					"nodeColor": "",
+					"titleColor": "",
+					"descColor": "",
+					"displayName": "",
+					"hasComment": true,
+					"comment": "Flow for registering new users"
+				}
+			},
+			"measured": {
 				"width": 170,
 				"height": 124
 			},
 			"selected": true
 		}
 	],
-	"edges": [],
+	"edges": [
+		{
+			"id": "startNode-f8499abb-5a30-4287-9e07-9852a9191bad-logNode-6ee27945-0c27-417c-bde1-c75cfd1824ce",
+			"type": "default",
+			"source": "startNode-f8499abb-5a30-4287-9e07-9852a9191bad",
+			"target": "logNode-6ee27945-0c27-417c-bde1-c75cfd1824ce",
+			"labelBgPadding": [
+				8,
+				4
+			],
+			"labelBgBorderRadius": 4,
+			"label": "",
+			"labelBgStyle": {
+				"fill": "#009688",
+				"color": "#ffffff",
+				"fillOpacity": 0.7
+			},
+			"labelShowBg": true,
+			"sourceHandle": "source_startNode-f8499abb-5a30-4287-9e07-9852a9191bad"
+		}
+	],
 	"viewport": {
 		"x": 0,
-		"y": 0,
+		"y": 43.875,
 		"zoom": 1
 	}
 }
