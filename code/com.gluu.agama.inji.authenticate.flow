@@ -19,10 +19,10 @@ Log "@info Checking user exists or not"
 When existingUser is not null
      //  User already registered, log them in
      Log "@info User already registered, logging in"
-     it_mgkql = {success:true, data: { userId: existingUser.uid, mail: existingUser.mail, displayName: existingUser.displayName, givenName: existingUser.givenName}}
-     Finish it_mgkql
+     it_zkewc = {success:true, data: { userId: existingUser.uid, mail: existingUser.mail, displayName: existingUser.displayName, givenName: existingUser.givenName}}
+     Finish it_zkewc
 Otherwise
      //  User not found
      Log "@info User not found, authentication failed"
-     it_wvvhc = {success:false, error: "User not found"}
-     Finish it_wvvhc
+     it_tsywg = {success:false, error: "User not found"}
+     Finish it_tsywg
