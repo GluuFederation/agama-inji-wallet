@@ -14,3 +14,6 @@ userSetupData = RRF "usersetup.ftlh" vcUserInfo
 // Check if password provided
 When userSetupData is not null
      Log "@info Creating user with provided data and password"
+Otherwise
+     // Password not provided"
+     Log "@info Password not provided"
