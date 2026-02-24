@@ -102,7 +102,7 @@
 				"width": 170,
 				"height": 124
 			},
-			"selected": true
+			"selected": false
 		},
 		{
 			"id": "logNode-6ee27945-0c27-417c-bde1-c75cfd1824ce",
@@ -197,7 +197,7 @@
 					"exceptionVariableField": "",
 					"callType": "Call static method",
 					"arguments": [
-						"feedback"
+						"conf"
 					],
 					"nodeIcon": "material-symbols:code",
 					"nodeColor": "",
@@ -214,6 +214,39 @@
 				"height": 124
 			},
 			"selected": false
+		},
+		{
+			"id": "logNode-8e61d8c3-2808-4a03-a2b7-746093ffe6f9",
+			"type": "logNode",
+			"position": {
+				"x": 1030,
+				"y": 40
+			},
+			"data": {
+				"id": "logNode-8e61d8c3-2808-4a03-a2b7-746093ffe6f9",
+				"type": "logNode",
+				"position": {
+					"x": 1030,
+					"y": 40
+				},
+				"previousNodeId": "callNode-3ba6fb5c-0b31-4934-8af7-c08d5166647c",
+				"agamaData": {
+					"logMessage": "\"Showing user registration form with data : %\" vcUserInfo",
+					"logLevel": "info",
+					"nodeIcon": "octicon:log-16",
+					"nodeColor": "",
+					"titleColor": "",
+					"descColor": "",
+					"displayName": "",
+					"hasComment": true,
+					"comment": "Show user setup page to review info and set password"
+				}
+			},
+			"measured": {
+				"width": 170,
+				"height": 124
+			},
+			"selected": true
 		}
 	],
 	"edges": [
@@ -273,11 +306,30 @@
 			},
 			"labelShowBg": true,
 			"sourceHandle": "source_assignmentNode-24e71146-2e7c-4e3f-bbc7-19ce76b7fdd2"
+		},
+		{
+			"id": "callNode-3ba6fb5c-0b31-4934-8af7-c08d5166647c-logNode-8e61d8c3-2808-4a03-a2b7-746093ffe6f9",
+			"type": "default",
+			"source": "callNode-3ba6fb5c-0b31-4934-8af7-c08d5166647c",
+			"target": "logNode-8e61d8c3-2808-4a03-a2b7-746093ffe6f9",
+			"labelBgPadding": [
+				8,
+				4
+			],
+			"labelBgBorderRadius": 4,
+			"label": "",
+			"labelBgStyle": {
+				"fill": "#009688",
+				"color": "#ffffff",
+				"fillOpacity": 0.7
+			},
+			"labelShowBg": true,
+			"sourceHandle": "source_callNode-3ba6fb5c-0b31-4934-8af7-c08d5166647c"
 		}
 	],
 	"viewport": {
-		"x": 0,
-		"y": 0,
+		"x": -555,
+		"y": 141,
 		"zoom": 1
 	}
 }
