@@ -214,7 +214,8 @@
                     }
                 }
             }
-        }
+        },
+        "com.gluu.agama.inji.authenticate": {}
     },
     "name": "agama-inji-wallet"
 }
