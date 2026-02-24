@@ -17,7 +17,7 @@
 					"y": 40
 				},
 				"agamaData": {
-					"isTopLevelFlow": true,
+					"isTopLevelFlow": false,
 					"basepath": "",
 					"configParams": {
 						"injiWebBaseURL": "https://injiweb.collab.mosip.net",
