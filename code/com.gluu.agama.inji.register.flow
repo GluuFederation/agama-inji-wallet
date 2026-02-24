@@ -5,3 +5,4 @@ Flow com.gluu.agama.inji.register
      Inputs vcUserInfo
 // Flow for registering new users
 Log "@info Starting registration flow for new user"
+feedback = {}
