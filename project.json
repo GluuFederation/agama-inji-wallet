@@ -146,7 +146,8 @@
             }
         },
         "io.jans.casa.inji.link": {},
-        "code": {}
+        "code": {},
+        "com.gluu.agama.inji.register": {}
     },
     "name": "agama-inji-wallet"
 }
