@@ -106,6 +106,46 @@
 				"width": 170,
 				"height": 124
 			},
+			"selected": false
+		},
+		{
+			"id": "callNode-3ba6fb5c-0b31-4934-8af7-c08d5166647c",
+			"type": "callNode",
+			"position": {
+				"x": 780,
+				"y": 40
+			},
+			"data": {
+				"id": "callNode-3ba6fb5c-0b31-4934-8af7-c08d5166647c",
+				"type": "callNode",
+				"position": {
+					"x": 780,
+					"y": 40
+				},
+				"previousNodeId": "assignmentNode-24e71146-2e7c-4e3f-bbc7-19ce76b7fdd2",
+				"agamaData": {
+					"javaClassName": "org.gluu.agama.inji.AgamaInjiVerificationService",
+					"javaMethodName": "getInstance",
+					"javaVariableName": "",
+					"exceptionVariableField": "",
+					"callType": "Call static method",
+					"arguments": [
+						"feedback"
+					],
+					"nodeIcon": "material-symbols:code",
+					"nodeColor": "",
+					"titleColor": "",
+					"descColor": "",
+					"displayName": "",
+					"hasComment": true,
+					"comment": "Create service instance",
+					"asssignedVariableName": "agamaInjiVerificationService"
+				}
+			},
+			"measured": {
+				"width": 170,
+				"height": 124
+			},
 			"selected": true
 		}
 	],
@@ -147,6 +187,25 @@
 			},
 			"labelShowBg": true,
 			"sourceHandle": "source_logNode-6ee27945-0c27-417c-bde1-c75cfd1824ce"
+		},
+		{
+			"id": "assignmentNode-24e71146-2e7c-4e3f-bbc7-19ce76b7fdd2-callNode-3ba6fb5c-0b31-4934-8af7-c08d5166647c",
+			"type": "default",
+			"source": "assignmentNode-24e71146-2e7c-4e3f-bbc7-19ce76b7fdd2",
+			"target": "callNode-3ba6fb5c-0b31-4934-8af7-c08d5166647c",
+			"labelBgPadding": [
+				8,
+				4
+			],
+			"labelBgBorderRadius": 4,
+			"label": "",
+			"labelBgStyle": {
+				"fill": "#009688",
+				"color": "#ffffff",
+				"fillOpacity": 0.7
+			},
+			"labelShowBg": true,
+			"sourceHandle": "source_assignmentNode-24e71146-2e7c-4e3f-bbc7-19ce76b7fdd2"
 		}
 	],
 	"viewport": {
