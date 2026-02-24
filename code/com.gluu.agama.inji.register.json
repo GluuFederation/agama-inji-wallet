@@ -89,7 +89,7 @@
 					},
 					"nodeIcon": "material-symbols:line-start-square",
 					"timeout": "",
-					"inputs": "vcUserInfo",
+					"inputs": "vcuserinfo",
 					"configs": "conf",
 					"flowname": "com.gluu.agama.inji.register",
 					"displayName": "Register Flow",
