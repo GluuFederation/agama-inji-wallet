@@ -11,3 +11,6 @@ agamaInjiVerificationService = Call org.gluu.agama.inji.AgamaInjiVerificationSer
 // Show user setup page to review info and set password
 Log "@info Showing user registration form with data : %" vcUserInfo
 userSetupData = RRF "usersetup.ftlh" vcUserInfo
+// Check if password provided
+When userSetupData is not null
+     Log "@info Creating user with provided data and password"
