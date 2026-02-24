@@ -491,7 +491,8 @@
 			"measured": {
 				"width": 170,
 				"height": 124
-			}
+			},
+			"selected": false
 		},
 		{
 			"id": "logNode-0ed93952-723f-4edc-a2b7-b06a8ef96012",
@@ -550,7 +551,7 @@
 					"hasComment": false,
 					"comment": "",
 					"flowfilename": "",
-					"returnVariable": "\"User not found\"",
+					"returnVariable": "User not found",
 					"finishMode": "withFailure",
 					"nodeIcon": "material-symbols:line-end-square-rounded"
 				}
@@ -558,7 +559,9 @@
 			"measured": {
 				"width": 170,
 				"height": 124
-			}
+			},
+			"selected": true,
+			"dragging": false
 		}
 	],
 	"edges": [
@@ -830,8 +833,8 @@
 		}
 	],
 	"viewport": {
-		"x": 56,
-		"y": 36,
+		"x": -1308,
+		"y": 499,
 		"zoom": 1
 	}
 }
