@@ -60,3 +60,6 @@ Repeat 3 times max
                               // Registration successful
                               Log "@info Registration successful"
                               Finish regResult
+                         Otherwise
+                              // Registration failed, continue retry loop
+                              Log "@info Registration failed"
