@@ -22,3 +22,13 @@ Repeat 3 times max
      agamaInjiVerificationService = Call org.gluu.agama.inji.AgamaInjiVerificationService#getInstance conf
      // Send an Authorization Request to Inji verify endpoint
      verificationResult = Call agamaInjiVerificationService createVpVerificationRequest 
+     // Check verification result.
+     When verificationResult.valid is true
+          // The service has been verified
+          Log "@info The service has been verified"
+          // Construct OpenID4VP Request url for RFAC call
+          rfacUrl = Call agamaInjiVerificationService buildInjiWebAuthorizationUrl verificationResult.requestId verificationResult.transactionId
+          //  Making RFAC call
+          Log "@info Making RFAC call to Inji web  app. URL is : %"  rfacUrl
+          // Inji web app response
+          resultFromApp = RFAC rfacUrl
