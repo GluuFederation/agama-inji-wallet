@@ -1266,6 +1266,40 @@
 				"width": 170,
 				"height": 124
 			},
+			"selected": false
+		},
+		{
+			"id": "logNode-158001cf-082b-46fd-9659-915fb9326dff",
+			"type": "logNode",
+			"position": {
+				"x": 6316,
+				"y": 283
+			},
+			"data": {
+				"id": "logNode-158001cf-082b-46fd-9659-915fb9326dff",
+				"type": "logNode",
+				"position": {
+					"x": 6316,
+					"y": 283
+				},
+				"previousNodeId": "whenNode-44c4889e-1b72-41cd-9614-9751e5aba808",
+				"branching": "otherwise",
+				"agamaData": {
+					"logMessage": "\"Registration failed\"",
+					"logLevel": "info",
+					"nodeIcon": "octicon:log-16",
+					"nodeColor": "",
+					"titleColor": "",
+					"descColor": "",
+					"displayName": "",
+					"hasComment": true,
+					"comment": "Registration failed, continue retry loop"
+				}
+			},
+			"measured": {
+				"width": 170,
+				"height": 124
+			},
 			"selected": true
 		}
 	],
@@ -1896,11 +1930,30 @@
 			},
 			"labelShowBg": true,
 			"sourceHandle": "source_logNode-03d98846-f147-4ea8-8607-75d8078b133d"
+		},
+		{
+			"id": "whenNode-44c4889e-1b72-41cd-9614-9751e5aba808-logNode-158001cf-082b-46fd-9659-915fb9326dff",
+			"type": "default",
+			"source": "whenNode-44c4889e-1b72-41cd-9614-9751e5aba808",
+			"target": "logNode-158001cf-082b-46fd-9659-915fb9326dff",
+			"labelBgPadding": [
+				8,
+				4
+			],
+			"labelBgBorderRadius": 4,
+			"label": "otherwise",
+			"labelBgStyle": {
+				"fill": "#009688",
+				"color": "#ffffff",
+				"fillOpacity": 0.7
+			},
+			"labelShowBg": true,
+			"sourceHandle": "source_whenNode-44c4889e-1b72-41cd-9614-9751e5aba808_otherwise"
 		}
 	],
 	"viewport": {
-		"x": -6000,
-		"y": -321,
+		"x": -5891,
+		"y": 28,
 		"zoom": 1
 	}
 }
