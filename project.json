@@ -282,7 +282,8 @@
                     }
                 }
             }
-        }
+        },
+        "com.gluu.agama.inji.verifyCredential": {}
     },
     "name": "agama-inji-wallet"
 }
