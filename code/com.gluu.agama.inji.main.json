@@ -1514,6 +1514,114 @@
 				"width": 170,
 				"height": 124
 			},
+			"selected": false
+		},
+		{
+			"id": "logNode-cce28679-b563-44c4-a312-7cd95558e7ae",
+			"type": "logNode",
+			"position": {
+				"x": 2316,
+				"y": -299
+			},
+			"data": {
+				"id": "logNode-cce28679-b563-44c4-a312-7cd95558e7ae",
+				"type": "logNode",
+				"position": {
+					"x": 2316,
+					"y": -299
+				},
+				"previousNodeId": "whenNode-0e605874-816a-4c36-8959-c89180c37673",
+				"branching": "otherwise",
+				"agamaData": {
+					"logMessage": "\"The service has been not verified\"",
+					"logLevel": "error",
+					"nodeIcon": "octicon:log-16",
+					"nodeColor": "",
+					"titleColor": "",
+					"descColor": "",
+					"displayName": "",
+					"hasComment": true,
+					"comment": "The service has been not verified"
+				}
+			},
+			"measured": {
+				"width": 170,
+				"height": 124
+			},
+			"selected": false
+		},
+		{
+			"id": "assignmentNode-6f0454b1-7ec6-40b5-bc1f-26baf5e5c12a",
+			"type": "assignmentNode",
+			"position": {
+				"x": 2566,
+				"y": -296
+			},
+			"data": {
+				"id": "assignmentNode-6f0454b1-7ec6-40b5-bc1f-26baf5e5c12a",
+				"type": "assignmentNode",
+				"position": {
+					"x": 2566,
+					"y": -299
+				},
+				"previousNodeId": "logNode-cce28679-b563-44c4-a312-7cd95558e7ae",
+				"agamaData": {
+					"assignments": [
+						{
+							"variableTypeCheck": true,
+							"assignmentExpression": "verificationResult.message",
+							"assignedVariableName": "feedback.errorMessage"
+						}
+					],
+					"nodeIcon": "material-symbols:equal",
+					"nodeColor": "",
+					"titleColor": "",
+					"descColor": "",
+					"displayName": "",
+					"hasComment": true,
+					"comment": "Error message"
+				}
+			},
+			"measured": {
+				"width": 170,
+				"height": 124
+			},
+			"selected": false,
+			"dragging": false
+		},
+		{
+			"id": "rrfNode-14b69734-4e7d-4edf-a006-9cbf48c6bc14",
+			"type": "rrfNode",
+			"position": {
+				"x": 2816,
+				"y": -296
+			},
+			"data": {
+				"id": "rrfNode-14b69734-4e7d-4edf-a006-9cbf48c6bc14",
+				"type": "rrfNode",
+				"position": {
+					"x": 2816,
+					"y": -296
+				},
+				"previousNodeId": "assignmentNode-6f0454b1-7ec6-40b5-bc1f-26baf5e5c12a",
+				"agamaData": {
+					"assignments": [],
+					"nodeIcon": "ph:globe-simple",
+					"templatePath": "error.ftlh",
+					"asssignedVariableName": "",
+					"nodeColor": "",
+					"titleColor": "",
+					"descColor": "",
+					"displayName": "",
+					"hasComment": true,
+					"comment": "Showing error",
+					"arguments": "feedback"
+				}
+			},
+			"measured": {
+				"width": 170,
+				"height": 124
+			},
 			"selected": true
 		}
 	],
@@ -2277,11 +2385,68 @@
 			},
 			"labelShowBg": true,
 			"sourceHandle": "source_assignmentNode-e5eee48e-e58f-4ec9-bcf0-bc4c19486a16"
+		},
+		{
+			"id": "whenNode-0e605874-816a-4c36-8959-c89180c37673-logNode-cce28679-b563-44c4-a312-7cd95558e7ae",
+			"type": "default",
+			"source": "whenNode-0e605874-816a-4c36-8959-c89180c37673",
+			"target": "logNode-cce28679-b563-44c4-a312-7cd95558e7ae",
+			"labelBgPadding": [
+				8,
+				4
+			],
+			"labelBgBorderRadius": 4,
+			"label": "otherwise",
+			"labelBgStyle": {
+				"fill": "#009688",
+				"color": "#ffffff",
+				"fillOpacity": 0.7
+			},
+			"labelShowBg": true,
+			"sourceHandle": "source_whenNode-0e605874-816a-4c36-8959-c89180c37673_otherwise"
+		},
+		{
+			"id": "logNode-cce28679-b563-44c4-a312-7cd95558e7ae-assignmentNode-6f0454b1-7ec6-40b5-bc1f-26baf5e5c12a",
+			"type": "default",
+			"source": "logNode-cce28679-b563-44c4-a312-7cd95558e7ae",
+			"target": "assignmentNode-6f0454b1-7ec6-40b5-bc1f-26baf5e5c12a",
+			"labelBgPadding": [
+				8,
+				4
+			],
+			"labelBgBorderRadius": 4,
+			"label": "",
+			"labelBgStyle": {
+				"fill": "#009688",
+				"color": "#ffffff",
+				"fillOpacity": 0.7
+			},
+			"labelShowBg": true,
+			"sourceHandle": "source_logNode-cce28679-b563-44c4-a312-7cd95558e7ae"
+		},
+		{
+			"id": "assignmentNode-6f0454b1-7ec6-40b5-bc1f-26baf5e5c12a-rrfNode-14b69734-4e7d-4edf-a006-9cbf48c6bc14",
+			"type": "default",
+			"source": "assignmentNode-6f0454b1-7ec6-40b5-bc1f-26baf5e5c12a",
+			"target": "rrfNode-14b69734-4e7d-4edf-a006-9cbf48c6bc14",
+			"labelBgPadding": [
+				8,
+				4
+			],
+			"labelBgBorderRadius": 4,
+			"label": "",
+			"labelBgStyle": {
+				"fill": "#009688",
+				"color": "#ffffff",
+				"fillOpacity": 0.7
+			},
+			"labelShowBg": true,
+			"sourceHandle": "source_assignmentNode-6f0454b1-7ec6-40b5-bc1f-26baf5e5c12a"
 		}
 	],
 	"viewport": {
-		"x": -3645,
-		"y": 176,
+		"x": -1950,
+		"y": 416,
 		"zoom": 1
 	}
 }
