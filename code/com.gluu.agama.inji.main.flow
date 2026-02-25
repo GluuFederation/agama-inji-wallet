@@ -32,3 +32,13 @@ Repeat 3 times max
           Log "@info Making RFAC call to Inji web  app. URL is : %"  rfacUrl
           // Inji web app response
           resultFromApp = RFAC rfacUrl
+          // Verify apps returned result
+          Log "@info Verify external app return result"
+          // verify final result
+          verifyFinalStatus = Call agamaInjiVerificationService verifyInjiAppResult verificationResult.requestId verificationResult.transactionId
+          // Checking final status
+          When verifyFinalStatus.valid is true
+               // Final verification done
+               Log "@info Final verification successfully done"
+               // Extract user info from VC (NID)
+               vcUserInfo = Call agamaInjiVerificationService extractUserInfoFromVC 
