@@ -16,3 +16,9 @@ When uidRef is not null
           actualUidRef = uidRef
 // Feedback message
 feedback = {}
+//  Max repeate
+Repeat 3 times max
+     // Create an instance of Agma-inji verification Service
+     agamaInjiVerificationService = Call org.gluu.agama.inji.AgamaInjiVerificationService#getInstance conf
+     // Send an Authorization Request to Inji verify endpoint
+     verificationResult = Call agamaInjiVerificationService createVpVerificationRequest 
