@@ -93,7 +93,7 @@
 					"configs": "conf",
 					"displayName": "",
 					"hasComment": true,
-					"comment": "Registration flow",
+					"comment": "Registration ",
 					"flowname": "com.gluu.agama.inji.register",
 					"flowName": "com.gluu.agama.inji.register"
 				}
@@ -102,7 +102,7 @@
 				"width": 170,
 				"height": 124
 			},
-			"selected": false
+			"selected": true
 		},
 		{
 			"id": "logNode-6ee27945-0c27-417c-bde1-c75cfd1824ce",
@@ -825,7 +825,7 @@
 				"width": 170,
 				"height": 124
 			},
-			"selected": true
+			"selected": false
 		}
 	],
 	"edges": [
@@ -1211,8 +1211,8 @@
 		}
 	],
 	"viewport": {
-		"x": -2086,
-		"y": 290,
+		"x": 0,
+		"y": 0,
 		"zoom": 1
 	}
 }
