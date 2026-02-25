@@ -77,3 +77,10 @@ Repeat 3 times max
                feedback.errorMessage = verifyFinalStatus.message
                // Showing error
                RRF "error.ftlh" feedback
+     Otherwise
+          // The service has been not verified
+          Log "@error The service has been not verified"
+          // Error message
+          feedback.errorMessage = verificationResult.message
+          // Showing error
+          RRF "error.ftlh" feedback
