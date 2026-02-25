@@ -1,4 +1,100 @@
 {
-  "nodes": [],
-  "edges": []
+	"nodes": [
+		{
+			"id": "startNode-78603359-a3ad-4cbf-b263-562841db4032",
+			"type": "startNode",
+			"sourcePosition": "right",
+			"position": {
+				"x": 30,
+				"y": 40
+			},
+			"deletable": false,
+			"data": {
+				"id": "startNode-78603359-a3ad-4cbf-b263-562841db4032",
+				"type": "startNode",
+				"position": {
+					"x": 30,
+					"y": 40
+				},
+				"agamaData": {
+					"isTopLevelFlow": true,
+					"basepath": "",
+					"configParams": {},
+					"nodeIcon": "material-symbols:line-start-square",
+					"timeout": "",
+					"inputs": "uidRef",
+					"configs": "conf",
+					"displayName": "",
+					"hasComment": true,
+					"comment": "Main",
+					"flowname": "com.gluu.agama.inji.main",
+					"flowName": "com.gluu.agama.inji.main"
+				}
+			},
+			"measured": {
+				"width": 170,
+				"height": 124
+			},
+			"selected": true
+		},
+		{
+			"id": "logNode-23667f98-3a3d-403e-9a4c-eb508c81257a",
+			"type": "logNode",
+			"position": {
+				"x": 280,
+				"y": 40
+			},
+			"data": {
+				"id": "logNode-23667f98-3a3d-403e-9a4c-eb508c81257a",
+				"type": "logNode",
+				"position": {
+					"x": 280,
+					"y": 40
+				},
+				"previousNodeId": "startNode-78603359-a3ad-4cbf-b263-562841db4032",
+				"agamaData": {
+					"logMessage": "\"Start executing Agama-Inji wallet flow...  with input param %\" uidRef",
+					"logLevel": "info",
+					"nodeIcon": "octicon:log-16",
+					"nodeColor": "",
+					"titleColor": "",
+					"descColor": "",
+					"displayName": "",
+					"hasComment": true,
+					"comment": "Main orchestrator flow for Inji wallet verification"
+				}
+			},
+			"measured": {
+				"width": 170,
+				"height": 124
+			},
+			"selected": false
+		}
+	],
+	"edges": [
+		{
+			"id": "startNode-78603359-a3ad-4cbf-b263-562841db4032-logNode-23667f98-3a3d-403e-9a4c-eb508c81257a",
+			"type": "default",
+			"source": "startNode-78603359-a3ad-4cbf-b263-562841db4032",
+			"target": "logNode-23667f98-3a3d-403e-9a4c-eb508c81257a",
+			"labelBgPadding": [
+				8,
+				4
+			],
+			"labelBgBorderRadius": 4,
+			"label": "",
+			"labelBgStyle": {
+				"fill": "#009688",
+				"color": "#ffffff",
+				"fillOpacity": 0.7
+			},
+			"labelShowBg": true,
+			"sourceHandle": "source_startNode-78603359-a3ad-4cbf-b263-562841db4032"
+		}
+	],
+	"viewport": {
+		"x": 0,
+		"y": 0,
+		"zoom": 1
+	}
 }
