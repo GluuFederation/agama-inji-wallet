@@ -1,4 +1,100 @@
 {
-  "nodes": [],
-  "edges": []
+	"nodes": [
+		{
+			"id": "startNode-40d76f9e-48e6-4093-b7d3-10a2195ce2aa",
+			"type": "startNode",
+			"sourcePosition": "right",
+			"position": {
+				"x": 30,
+				"y": 40
+			},
+			"deletable": false,
+			"data": {
+				"id": "startNode-40d76f9e-48e6-4093-b7d3-10a2195ce2aa",
+				"type": "startNode",
+				"position": {
+					"x": 30,
+					"y": 40
+				},
+				"agamaData": {
+					"isTopLevelFlow": true,
+					"basepath": "",
+					"configParams": {},
+					"nodeIcon": "material-symbols:line-start-square",
+					"timeout": "",
+					"inputs": "uidRef",
+					"configs": "conf",
+					"displayName": "",
+					"hasComment": true,
+					"comment": "",
+					"flowname": "com.gluu.agama.inji.main",
+					"flowName": "com.gluu.agama.inji.main"
+				}
+			},
+			"measured": {
+				"width": 170,
+				"height": 124
+			},
+			"selected": true
+		},
+		{
+			"id": "logNode-f3a7dac5-945d-43fc-9dce-cf256c36e57d",
+			"type": "logNode",
+			"position": {
+				"x": 280,
+				"y": 40
+			},
+			"data": {
+				"id": "logNode-f3a7dac5-945d-43fc-9dce-cf256c36e57d",
+				"type": "logNode",
+				"position": {
+					"x": 280,
+					"y": 40
+				},
+				"previousNodeId": "startNode-40d76f9e-48e6-4093-b7d3-10a2195ce2aa",
+				"agamaData": {
+					"logMessage": "\"Start executing Agama-Inji wallet flow...  with input param %\" uidRef",
+					"logLevel": "info",
+					"nodeIcon": "octicon:log-16",
+					"nodeColor": "",
+					"titleColor": "",
+					"descColor": "",
+					"displayName": "",
+					"hasComment": true,
+					"comment": ""
+				}
+			},
+			"measured": {
+				"width": 170,
+				"height": 124
+			},
+			"selected": false
+		}
+	],
+	"edges": [
+		{
+			"id": "startNode-40d76f9e-48e6-4093-b7d3-10a2195ce2aa-logNode-f3a7dac5-945d-43fc-9dce-cf256c36e57d",
+			"type": "default",
+			"source": "startNode-40d76f9e-48e6-4093-b7d3-10a2195ce2aa",
+			"target": "logNode-f3a7dac5-945d-43fc-9dce-cf256c36e57d",
+			"labelBgPadding": [
+				8,
+				4
+			],
+			"labelBgBorderRadius": 4,
+			"label": "",
+			"labelBgStyle": {
+				"fill": "#009688",
+				"color": "#ffffff",
+				"fillOpacity": 0.7
+			},
+			"labelShowBg": true,
+			"sourceHandle": "source_startNode-40d76f9e-48e6-4093-b7d3-10a2195ce2aa"
+		}
+	],
+	"viewport": {
+		"x": 0,
+		"y": 0,
+		"zoom": 1
+	}
 }
