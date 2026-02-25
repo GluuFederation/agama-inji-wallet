@@ -282,8 +282,7 @@
                     }
                 }
             }
-        },
-        "com.gluu.agama.inji.main": {}
+        }
     },
     "name": "agama-inji-wallet"
 }
