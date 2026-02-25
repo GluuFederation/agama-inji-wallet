@@ -10,3 +10,7 @@ When uidRef is not null
      When uidRef.flowQname is not null
           Log "@info Input is a Map with metadata, ignoring and setting uidRef to null"
           actualUidRef = null
+     Otherwise
+          // Input is a simple string
+          Log "@info Input is a simple string, using as uidRef: %" uidRef
+          actualUidRef = uidRef
