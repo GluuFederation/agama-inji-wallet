@@ -14,3 +14,5 @@ When uidRef is not null
           // Input is a simple string
           Log "@info Input is a simple string, using as uidRef: %" uidRef
           actualUidRef = uidRef
+// Feedback message
+feedback = {}
