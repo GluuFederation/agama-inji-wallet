@@ -70,3 +70,10 @@ Repeat 3 times max
                     feedback.errorMessage = "Failed to extract user information from credential"
                     // show error
                     RRF "error.ftlh" feedback
+          Otherwise
+               // Validation faild
+               Log "@info Validation failed"
+               // Errror message
+               feedback.errorMessage = verifyFinalStatus.message
+               // Showing error
+               RRF "error.ftlh" feedback
