@@ -93,7 +93,7 @@
 					"configs": "conf",
 					"displayName": "Generated Node",
 					"hasComment": true,
-					"comment": " Paste your Agama DSL code bellow.",
+					"comment": "Authentication",
 					"flowname": "com.gluu.agama.inji.authenticate",
 					"creationDate": "25/02/2026"
 				}
@@ -102,7 +102,8 @@
 				"width": 170,
 				"height": 124
 			},
-			"selected": true
+			"selected": true,
+			"dragging": false
 		},
 		{
 			"id": "logNode-8388b616-3fa3-4512-88aa-8de770c6ac7c",
