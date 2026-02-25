@@ -1,0 +1,5 @@
+Flow com.gluu.agama.inji.main
+     Basepath ""
+     Configs conf
+     Inputs uidRef
+Log "@info Start executing Agama-Inji wallet flow...  with input param %" uidRef
