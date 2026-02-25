@@ -42,3 +42,13 @@ Repeat 3 times max
                Log "@info Final verification successfully done"
                // Extract user info from VC (NID)
                vcUserInfo = Call agamaInjiVerificationService extractUserInfoFromVC 
+               // Check if user info extracted
+               When vcUserInfo is not null
+                    // User info extracted from VC
+                    Log "@info User info extracted from VC"
+                    // Try to authenticate existing user
+                    authResult = Trigger com.gluu.agama.inji.authenticate vcUserInfo actualUidRef
+                    When authResult.success is true
+                         // User authenticated successfully"
+                         Log "@info User authenticated successfully"
+                         Finish authResult
