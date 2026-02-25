@@ -1,4 +1,4 @@
-// Registration flow
+// Registration 
 Flow com.gluu.agama.inji.register
      Basepath ""
      Configs conf
@@ -23,21 +23,21 @@ When userSetupData is not null
           // Acknowledge
           ack = RRF "acknowledge.ftlh" 
           // Flow finish successfully
-          it_ykrls = {success:true, data: { userId: user.uid, mail: user.mail, displayName: user.displayName, givenName: user.givenName}}
-          Finish it_ykrls
+          it_agbvb = {success:true, data: { userId: user.uid, mail: user.mail, displayName: user.displayName, givenName: user.givenName}}
+          Finish it_agbvb
      Otherwise
           // Failed to onboard user
           Log "@info Failed to onboard user"
           feedback.errorMessage = "Failed to create user account"
           // show error
           RRF "error.ftlh" feedback
-          it_ruxtx = {success:false, error: "Password is required"}
-          Finish it_ruxtx
+          it_rvjxs = {success:false, error: "Password is required"}
+          Finish it_rvjxs
 Otherwise
      // Password not provided"
      Log "@info Password not provided"
      feedback.errorMessage = "Password is required"
      // Show error
      RRF "error.ftlh" feedback
-     it_cwsnv = {success:false, error: "Password is required"}
-     Finish it_cwsnv
+     it_syxhs = {success:false, error: "Password is required"}
+     Finish it_syxhs
