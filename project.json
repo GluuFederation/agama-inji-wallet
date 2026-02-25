@@ -215,7 +215,6 @@
                 }
             }
         },
-        "com.gluu.agama.inji.main": {},
         "com.gluu.agama.inji.verifyCredential.main": {
             "injiWebBaseURL": "https://injiweb.collab.mosip.net",
             "injiVerifyBaseURL": "https://injiverify.collab.mosip.net",
