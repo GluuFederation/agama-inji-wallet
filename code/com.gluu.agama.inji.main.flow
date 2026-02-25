@@ -5,3 +5,8 @@ Flow com.gluu.agama.inji.main
      Inputs uidRef
 // Main orchestrator flow for Inji wallet verification
 Log "@info Start executing Agama-Inji wallet flow...  with input param %" uidRef
+actualUidRef = null
+When uidRef is not null
+     When uidRef.flowQname is not null
+          Log "@info Input is a Map with metadata, ignoring and setting uidRef to null"
+          actualUidRef = null
