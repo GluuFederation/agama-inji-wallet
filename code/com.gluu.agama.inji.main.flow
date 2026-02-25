@@ -52,3 +52,11 @@ Repeat 3 times max
                          // User authenticated successfully"
                          Log "@info User authenticated successfully"
                          Finish authResult
+                    Otherwise
+                         // User not found, trigger registration flow
+                         Log "@info User not found, starting registration"
+                         regResult = Trigger com.gluu.agama.inji.register vcUserInfo
+                         When regResult.success is true
+                              // Registration successful
+                              Log "@info Registration successful"
+                              Finish regResult
