@@ -1,4 +1,4 @@
-//  Paste your Agama DSL code bellow.
+// Authentication
 Flow com.gluu.agama.inji.authenticate
      Basepath ""
      Configs conf
@@ -19,10 +19,10 @@ Log "@info Checking user exists or not"
 When existingUser is not null
      //  User already registered, log them in
      Log "@info User already registered, logging in"
-     it_zkewc = {success:true, data: { userId: existingUser.uid, mail: existingUser.mail, displayName: existingUser.displayName, givenName: existingUser.givenName}}
-     Finish it_zkewc
+     it_bgtfh = {success:true, data: { userId: existingUser.uid, mail: existingUser.mail, displayName: existingUser.displayName, givenName: existingUser.givenName}}
+     Finish it_bgtfh
 Otherwise
      //  User not found
      Log "@info User not found, authentication failed"
-     it_tsywg = {success:false, error: "User not found"}
-     Finish it_tsywg
+     it_bhcik = {success:false, error: "User not found"}
+     Finish it_bhcik
