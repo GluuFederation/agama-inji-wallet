@@ -63,3 +63,10 @@ Repeat 3 times max
                          Otherwise
                               // Registration failed, continue retry loop
                               Log "@info Registration failed"
+               Otherwise
+                    // Failed to extract user info
+                    Log "@info Failed to extract user info from VC"
+                    // Failed to onbaord user
+                    feedback.errorMessage = "Failed to extract user information from credential"
+                    // show error
+                    RRF "error.ftlh" feedback
