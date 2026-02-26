@@ -28,7 +28,7 @@
 					"displayName": "Linking",
 					"creationDate": "10/02/2026",
 					"hasComment": true,
-					"comment": ""
+					"comment": "This flow is helping flow for plugin. it will trigger com.gluu.agama.main "
 				}
 			},
 			"measured": {
@@ -87,7 +87,7 @@
 				"previousNodeId": "logNode-5b0fba12-ddf3-41cf-89d6-743bf6b67ff6",
 				"agamaData": {
 					"nodeIcon": "fluent-mdl2:trigger-approval",
-					"flowFileName": "com.gluu.agama.inji.verifyCredential",
+					"flowFileName": "com.gluu.agama.inji.main",
 					"arguments": [
 						"uidRef"
 					],
@@ -106,7 +106,7 @@
 				"width": 170,
 				"height": 124
 			},
-			"selected": false
+			"selected": true
 		},
 		{
 			"id": "logNode-dad26d34-e221-4907-967d-40562b992b51",
@@ -173,7 +173,7 @@
 				"width": 170,
 				"height": 124
 			},
-			"selected": true
+			"selected": false
 		}
 	],
 	"edges": [
@@ -255,8 +255,8 @@
 		}
 	],
 	"viewport": {
-		"x": -227,
-		"y": 34,
+		"x": 33,
+		"y": 143,
 		"zoom": 1
 	}
 }
