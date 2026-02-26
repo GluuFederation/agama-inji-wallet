@@ -23,21 +23,21 @@ When userSetupData is not null
           // Acknowledge
           ack = RRF "acknowledge.ftlh" 
           // Flow finish successfully
-          it_agbvb = {success:true, data: { userId: user.uid, mail: user.mail, displayName: user.displayName, givenName: user.givenName}}
-          Finish it_agbvb
+          it_afuyl = {success:true, data: { userId: user.uid, mail: user.mail, displayName: user.displayName, givenName: user.givenName}}
+          Finish it_afuyl
      Otherwise
           // Failed to onboard user
           Log "@info Failed to onboard user"
           feedback.errorMessage = "Failed to create user account"
           // show error
           RRF "error.ftlh" feedback
-          it_rvjxs = {success:false, error: "Password is required"}
-          Finish it_rvjxs
+          it_bxocq = {success:false, error: "Password is required"}
+          Finish it_bxocq
 Otherwise
      // Password not provided"
      Log "@info Password not provided"
      feedback.errorMessage = "Password is required"
      // Show error
      RRF "error.ftlh" feedback
-     it_syxhs = {success:false, error: "Password is required"}
-     Finish it_syxhs
+     it_wrlnn = {success:false, error: "Password is required"}
+     Finish it_wrlnn
