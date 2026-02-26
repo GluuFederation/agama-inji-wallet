@@ -102,7 +102,8 @@
 				"width": 170,
 				"height": 124
 			},
-			"selected": true
+			"selected": true,
+			"dragging": false
 		},
 		{
 			"id": "logNode-6ee27945-0c27-417c-bde1-c75cfd1824ce",
