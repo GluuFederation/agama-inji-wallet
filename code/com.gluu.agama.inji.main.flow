@@ -1,4 +1,4 @@
-// This is the mail flow, it will trigger 
+// This is the main flow, it will trigger 
 // com.gluu.agama.inji.register
 // com.gluu.agama.inji.authenticate flow
 Flow com.gluu.agama.inji.main
@@ -89,5 +89,5 @@ Repeat 3 times max
 // Max tries
 Log "@info You've reached the max tries"
 // Finish with error
-it_zvfio = {success:false, error: "You've reached max tries."}
-Finish it_zvfio
+it_ugrtz = {success:false, error: "You've reached max tries."}
+Finish it_ugrtz
