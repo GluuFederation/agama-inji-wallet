@@ -87,5 +87,5 @@ Repeat 3 times max
 // Max tries
 Log "@info You've reached the max tries"
 // Finish with error
-it_qeadl = {success:false, error: "You've reached max tries."}
-Finish it_qeadl
+it_fztkg = {success:false, error: "You've reached max tries."}
+Finish it_fztkg
