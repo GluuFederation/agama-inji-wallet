@@ -93,7 +93,7 @@
 					"configs": "conf",
 					"displayName": "",
 					"hasComment": true,
-					"comment": "Main",
+					"comment": "This is the mail flow, it will trigger \ncom.gluu.agama.inji.register\ncom.gluu.agama.inji.authenticate flow",
 					"flowname": "com.gluu.agama.inji.main",
 					"flowName": "com.gluu.agama.inji.main"
 				}
