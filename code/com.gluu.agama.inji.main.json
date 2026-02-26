@@ -19,7 +19,74 @@
 				"agamaData": {
 					"isTopLevelFlow": true,
 					"basepath": "",
-					"configParams": {},
+					"configParams": {
+						"injiWebBaseURL": "https://injiweb.collab.mosip.net",
+						"injiVerifyBaseURL": "https://injiverify.collab.mosip.net",
+						"agamaCallBackUrl": "https://mosip-demo.gluu.info/jans-auth/fl/callback",
+						"clientId": "agama-app",
+						"credentialMappings": [
+							{
+								"credentialType": "NID",
+								"vcToGluuMapping": {
+									"fullName": "displayName",
+									"phone": "mobile",
+									"gender": "gender",
+									"email": "mail",
+									"dateOfBirth": "birthdate"
+								}
+							}
+						],
+						"presentationDefinition": {
+							"id": "c4822b58-7fb4-454e-b827-f8758fe27f9a",
+							"purpose": "Relying party is requesting your digital ID for the purpose of Self-Authentication",
+							"format": {
+								"ldp_vc": {
+									"proof_type": [
+										"Ed25519Signature2020"
+									]
+								}
+							},
+							"input_descriptors": [
+								{
+									"id": "id card credential",
+									"format": {
+										"ldp_vc": {
+											"proof_type": [
+												"Ed25519Signature2020",
+												"RsaSignature2018"
+											]
+										}
+									},
+									"constraints": {
+										"fields": [
+											{
+												"path": [
+													"$.type"
+												],
+												"filter": {
+													"type": "object",
+													"pattern": "MOSIPVerifiableCredential"
+												}
+											}
+										]
+									}
+								}
+							]
+						},
+						"clientMetadata": {
+							"client_name": "Agama Application",
+							"logo_uri": "https://mosip.github.io/inji-config/logos/StayProtectedInsurance.png",
+							"vp_formats": {
+								"ldp_vp": {
+									"proof_type": [
+										"Ed25519Signature2018",
+										"Ed25519Signature2020",
+										"RsaSignature2018"
+									]
+								}
+							}
+						}
+					},
 					"nodeIcon": "material-symbols:line-start-square",
 					"timeout": "",
 					"inputs": "uidRef",
@@ -35,7 +102,7 @@
 				"width": 170,
 				"height": 124
 			},
-			"selected": false
+			"selected": true
 		},
 		{
 			"id": "logNode-23667f98-3a3d-403e-9a4c-eb508c81257a",
@@ -1690,7 +1757,7 @@
 				"width": 170,
 				"height": 124
 			},
-			"selected": true
+			"selected": false
 		}
 	],
 	"edges": [
@@ -2551,8 +2618,8 @@
 		}
 	],
 	"viewport": {
-		"x": -1180,
-		"y": 606,
+		"x": 0,
+		"y": 0,
 		"zoom": 1
 	}
 }
