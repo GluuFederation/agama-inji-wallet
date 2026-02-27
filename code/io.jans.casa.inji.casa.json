@@ -1,4 +1,256 @@
 {
-  "nodes": [],
-  "edges": []
+	"nodes": [
+		{
+			"id": "startNode-3e95fea5-4179-4901-bebc-e0ce98e75774",
+			"type": "startNode",
+			"sourcePosition": "right",
+			"position": {
+				"x": 30,
+				"y": 40
+			},
+			"deletable": false,
+			"data": {
+				"id": "startNode-3e95fea5-4179-4901-bebc-e0ce98e75774",
+				"type": "startNode",
+				"position": {
+					"x": 30,
+					"y": 40
+				},
+				"agamaData": {
+					"isTopLevelFlow": true,
+					"basepath": "",
+					"configParams": "{}",
+					"nodeIcon": "material-symbols:line-start-square",
+					"timeout": "",
+					"inputs": "uidRef",
+					"configs": "",
+					"displayName": "Generated Node",
+					"hasComment": true,
+					"comment": " Paste your Agama DSL code bellow.",
+					"flowname": "io.jans.casa.inji.casa",
+					"creationDate": "28/02/2026"
+				}
+			},
+			"measured": {
+				"width": 170,
+				"height": 124
+			}
+		},
+		{
+			"id": "logNode-430acd94-dac2-412c-a78e-a3b95fe975ab",
+			"type": "logNode",
+			"position": {
+				"x": 280,
+				"y": 40
+			},
+			"data": {
+				"id": "logNode-430acd94-dac2-412c-a78e-a3b95fe975ab",
+				"type": "logNode",
+				"position": {
+					"x": 280,
+					"y": 40
+				},
+				"previousNodeId": "startNode-3e95fea5-4179-4901-bebc-e0ce98e75774",
+				"agamaData": {
+					"logMessage": "\"Casa Inji linking flow started for user: %\" uidRef",
+					"logLevel": "info",
+					"nodeIcon": "octicon:log-16",
+					"nodeColor": "",
+					"titleColor": "",
+					"descColor": "",
+					"displayName": "LOG",
+					"hasComment": true,
+					"comment": " Paste your Agama DSL code bellow."
+				}
+			},
+			"measured": {
+				"width": 170,
+				"height": 124
+			}
+		},
+		{
+			"id": "triggerNode-ef40ce7e-fafd-4ae6-80f1-869db9f8efbe",
+			"type": "triggerNode",
+			"position": {
+				"x": 530,
+				"y": 40
+			},
+			"data": {
+				"id": "triggerNode-ef40ce7e-fafd-4ae6-80f1-869db9f8efbe",
+				"type": "triggerNode",
+				"position": {
+					"x": 530,
+					"y": 40
+				},
+				"previousNodeId": "logNode-430acd94-dac2-412c-a78e-a3b95fe975ab",
+				"agamaData": {
+					"nodeIcon": "fluent-mdl2:trigger-approval",
+					"flowFileName": "com.gluu.agama.inji.main",
+					"arguments": [
+						"uidRef"
+					],
+					"asssignedVariableName": "result",
+					"exceptionVariableField": "",
+					"nodeColor": "",
+					"titleColor": "",
+					"descColor": "",
+					"displayName": "TRIGGER",
+					"hasComment": true,
+					"comment": " Call the main verification flow"
+				}
+			},
+			"measured": {
+				"width": 170,
+				"height": 124
+			}
+		},
+		{
+			"id": "logNode-197e76c9-d96c-4705-9764-a683b0219ccb",
+			"type": "logNode",
+			"position": {
+				"x": 780,
+				"y": 40
+			},
+			"data": {
+				"id": "logNode-197e76c9-d96c-4705-9764-a683b0219ccb",
+				"type": "logNode",
+				"position": {
+					"x": 780,
+					"y": 40
+				},
+				"previousNodeId": "triggerNode-ef40ce7e-fafd-4ae6-80f1-869db9f8efbe",
+				"agamaData": {
+					"logMessage": "\"Casa Inji linking completed, returning uidRef\"",
+					"logLevel": "info",
+					"nodeIcon": "octicon:log-16",
+					"nodeColor": "",
+					"titleColor": "",
+					"descColor": "",
+					"displayName": "LOG",
+					"hasComment": true,
+					"comment": " Even if the main flow returns something else, we return the uidRef"
+				}
+			},
+			"measured": {
+				"width": 170,
+				"height": 124
+			}
+		},
+		{
+			"id": "finishNode-71e5b72b-b3d6-447a-b28a-430a4e76af1b",
+			"type": "finishNode",
+			"position": {
+				"x": 1030,
+				"y": 40
+			},
+			"data": {
+				"id": "finishNode-71e5b72b-b3d6-447a-b28a-430a4e76af1b",
+				"type": "finishNode",
+				"position": {
+					"x": 1030,
+					"y": 40
+				},
+				"previousNodeId": "logNode-197e76c9-d96c-4705-9764-a683b0219ccb",
+				"agamaData": {
+					"nodeColor": "",
+					"titleColor": "",
+					"descColor": "",
+					"displayName": "END BLOCK",
+					"hasComment": false,
+					"comment": "",
+					"flowfilename": "",
+					"returnVariable": "{ userId: uidRef}",
+					"finishMode": "withSuccess",
+					"nodeIcon": "material-symbols:line-end-square-rounded"
+				}
+			},
+			"measured": {
+				"width": 170,
+				"height": 124
+			}
+		}
+	],
+	"edges": [
+		{
+			"id": "startNode-3e95fea5-4179-4901-bebc-e0ce98e75774-logNode-430acd94-dac2-412c-a78e-a3b95fe975ab",
+			"type": "default",
+			"source": "startNode-3e95fea5-4179-4901-bebc-e0ce98e75774",
+			"target": "logNode-430acd94-dac2-412c-a78e-a3b95fe975ab",
+			"labelBgPadding": [
+				8,
+				4
+			],
+			"labelBgBorderRadius": 4,
+			"label": "",
+			"labelBgStyle": {
+				"fill": "#009688",
+				"color": "#ffffff",
+				"fillOpacity": 0.7
+			},
+			"labelShowBg": true,
+			"sourceHandle": ""
+		},
+		{
+			"id": "logNode-430acd94-dac2-412c-a78e-a3b95fe975ab-triggerNode-ef40ce7e-fafd-4ae6-80f1-869db9f8efbe",
+			"type": "default",
+			"source": "logNode-430acd94-dac2-412c-a78e-a3b95fe975ab",
+			"target": "triggerNode-ef40ce7e-fafd-4ae6-80f1-869db9f8efbe",
+			"labelBgPadding": [
+				8,
+				4
+			],
+			"labelBgBorderRadius": 4,
+			"label": "",
+			"labelBgStyle": {
+				"fill": "#009688",
+				"color": "#ffffff",
+				"fillOpacity": 0.7
+			},
+			"labelShowBg": true,
+			"sourceHandle": ""
+		},
+		{
+			"id": "triggerNode-ef40ce7e-fafd-4ae6-80f1-869db9f8efbe-logNode-197e76c9-d96c-4705-9764-a683b0219ccb",
+			"type": "default",
+			"source": "triggerNode-ef40ce7e-fafd-4ae6-80f1-869db9f8efbe",
+			"target": "logNode-197e76c9-d96c-4705-9764-a683b0219ccb",
+			"labelBgPadding": [
+				8,
+				4
+			],
+			"labelBgBorderRadius": 4,
+			"label": "",
+			"labelBgStyle": {
+				"fill": "#009688",
+				"color": "#ffffff",
+				"fillOpacity": 0.7
+			},
+			"labelShowBg": true,
+			"sourceHandle": ""
+		},
+		{
+			"id": "logNode-197e76c9-d96c-4705-9764-a683b0219ccb-finishNode-71e5b72b-b3d6-447a-b28a-430a4e76af1b",
+			"type": "default",
+			"source": "logNode-197e76c9-d96c-4705-9764-a683b0219ccb",
+			"target": "finishNode-71e5b72b-b3d6-447a-b28a-430a4e76af1b",
+			"labelBgPadding": [
+				8,
+				4
+			],
+			"labelBgBorderRadius": 4,
+			"label": "",
+			"labelBgStyle": {
+				"fill": "#009688",
+				"color": "#ffffff",
+				"fillOpacity": 0.7
+			},
+			"labelShowBg": true,
+			"sourceHandle": ""
+		}
+	],
+	"viewport": {
+		"x": 0,
+		"y": 0,
+		"zoom": 1
+	}
 }
