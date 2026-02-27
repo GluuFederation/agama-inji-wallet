@@ -282,7 +282,8 @@
                 }
             }
         },
-        "io.jans.casa.inji.casa": {}
+        "io.jans.casa.inji.casa": {},
+        "io.jans.casa.inji.link": {}
     },
     "name": "agama-inji-wallet"
 }
