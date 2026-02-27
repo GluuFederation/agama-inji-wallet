@@ -1,262 +1,262 @@
 {
-  "nodes": [
-    {
-      "id": "startNode-8cce33a3-3b0a-4436-9ab9-255b7faaf15c",
-      "type": "startNode",
-      "sourcePosition": "right",
-      "position": {
-        "x": 30,
-        "y": 30
-      },
-      "deletable": false,
-      "data": {
-        "id": "startNode-8cce33a3-3b0a-4436-9ab9-255b7faaf15c",
-        "type": "startNode",
-        "position": {
-          "x": 30,
-          "y": 40
-        },
-        "agamaData": {
-          "isTopLevelFlow": true,
-          "basepath": "",
-          "configParams": {},
-          "nodeIcon": "material-symbols:line-start-square",
-          "timeout": "",
-          "inputs": "uidRef",
-          "configs": "",
-          "flowname": "io.jans.casa.inji.link",
-          "displayName": "Linking",
-          "creationDate": "10/02/2026",
-          "hasComment": true,
-          "comment": "This flow is helping flow for plugin. it will trigger com.gluu.agama.main "
-        }
-      },
-      "measured": {
-        "width": 170,
-        "height": 124
-      },
-      "selected": false
-    },
-    {
-      "id": "logNode-5b0fba12-ddf3-41cf-89d6-743bf6b67ff6",
-      "type": "logNode",
-      "position": {
-        "x": 280,
-        "y": 30
-      },
-      "data": {
-        "id": "logNode-5b0fba12-ddf3-41cf-89d6-743bf6b67ff6",
-        "type": "logNode",
-        "position": {
-          "x": 280,
-          "y": 30
-        },
-        "previousNodeId": "startNode-8cce33a3-3b0a-4436-9ab9-255b7faaf15c",
-        "agamaData": {
-          "logMessage": "\"Casa Inji linking flow started for user: %\" uidRef",
-          "logLevel": "info",
-          "nodeIcon": "octicon:log-16",
-          "nodeColor": "",
-          "titleColor": "",
-          "descColor": "",
-          "displayName": "",
-          "hasComment": true,
-          "comment": ""
-        }
-      },
-      "measured": {
-        "width": 170,
-        "height": 124
-      },
-      "selected": false
-    },
-    {
-      "id": "triggerNode-da3b75a6-12f1-45a0-befc-0ecd76ba3193",
-      "type": "triggerNode",
-      "position": {
-        "x": 530,
-        "y": 30
-      },
-      "data": {
-        "id": "triggerNode-da3b75a6-12f1-45a0-befc-0ecd76ba3193",
-        "type": "triggerNode",
-        "position": {
-          "x": 530,
-          "y": 30
-        },
-        "previousNodeId": "logNode-5b0fba12-ddf3-41cf-89d6-743bf6b67ff6",
-        "agamaData": {
-          "nodeIcon": "fluent-mdl2:trigger-approval",
-          "flowFileName": "com.gluu.agama.inji.main",
-          "arguments": [
-            "uidRef"
-          ],
-          "asssignedVariableName": "result",
-          "exceptionVariableField": "",
-          "nodeColor": "",
-          "titleColor": "",
-          "descColor": "",
-          "displayName": "",
-          "hasComment": true,
-          "comment": "Call the main verification flow",
-          "overrides": []
-        }
-      },
-      "measured": {
-        "width": 170,
-        "height": 124
-      },
-      "selected": true
-    },
-    {
-      "id": "logNode-dad26d34-e221-4907-967d-40562b992b51",
-      "type": "logNode",
-      "position": {
-        "x": 780,
-        "y": 30
-      },
-      "data": {
-        "id": "logNode-dad26d34-e221-4907-967d-40562b992b51",
-        "type": "logNode",
-        "position": {
-          "x": 780,
-          "y": 30
-        },
-        "previousNodeId": "triggerNode-da3b75a6-12f1-45a0-befc-0ecd76ba3193",
-        "agamaData": {
-          "logMessage": "\"Casa Inji linking completed, returning uidRef\"",
-          "logLevel": "info",
-          "nodeIcon": "octicon:log-16",
-          "nodeColor": "",
-          "titleColor": "",
-          "descColor": "",
-          "displayName": "",
-          "hasComment": true,
-          "comment": "Always finish with the uidRef for successful linking\nEven if the main flow returns something else, we return the uidRef"
-        }
-      },
-      "measured": {
-        "width": 170,
-        "height": 124
-      },
-      "selected": false
-    },
-    {
-      "id": "finishNode-65be031b-85f9-4ea5-9e4c-619769bb251a",
-      "type": "finishNode",
-      "position": {
-        "x": 1030,
-        "y": 30
-      },
-      "data": {
-        "id": "finishNode-65be031b-85f9-4ea5-9e4c-619769bb251a",
-        "type": "finishNode",
-        "position": {
-          "x": 1030,
-          "y": 30
-        },
-        "previousNodeId": "logNode-dad26d34-e221-4907-967d-40562b992b51",
-        "agamaData": {
-          "nodeColor": "",
-          "titleColor": "",
-          "descColor": "",
-          "displayName": "",
-          "hasComment": true,
-          "comment": "",
-          "flowfilename": "",
-          "returnVariable": "{ userId: uidRef}",
-          "finishMode": "withSuccess",
-          "nodeIcon": "material-symbols:line-end-square-rounded"
-        }
-      },
-      "measured": {
-        "width": 170,
-        "height": 124
-      },
-      "selected": false
-    }
-  ],
-  "edges": [
-    {
-      "id": "startNode-8cce33a3-3b0a-4436-9ab9-255b7faaf15c-logNode-5b0fba12-ddf3-41cf-89d6-743bf6b67ff6",
-      "type": "default",
-      "source": "startNode-8cce33a3-3b0a-4436-9ab9-255b7faaf15c",
-      "target": "logNode-5b0fba12-ddf3-41cf-89d6-743bf6b67ff6",
-      "labelBgPadding": [
-        8,
-        4
-      ],
-      "labelBgBorderRadius": 4,
-      "label": "",
-      "labelBgStyle": {
-        "fill": "#009688",
-        "color": "#ffffff",
-        "fillOpacity": 0.7
-      },
-      "labelShowBg": true,
-      "sourceHandle": "source_startNode-8cce33a3-3b0a-4436-9ab9-255b7faaf15c"
-    },
-    {
-      "id": "logNode-5b0fba12-ddf3-41cf-89d6-743bf6b67ff6-triggerNode-da3b75a6-12f1-45a0-befc-0ecd76ba3193",
-      "type": "default",
-      "source": "logNode-5b0fba12-ddf3-41cf-89d6-743bf6b67ff6",
-      "target": "triggerNode-da3b75a6-12f1-45a0-befc-0ecd76ba3193",
-      "labelBgPadding": [
-        8,
-        4
-      ],
-      "labelBgBorderRadius": 4,
-      "label": "",
-      "labelBgStyle": {
-        "fill": "#009688",
-        "color": "#ffffff",
-        "fillOpacity": 0.7
-      },
-      "labelShowBg": true,
-      "sourceHandle": "source_logNode-5b0fba12-ddf3-41cf-89d6-743bf6b67ff6"
-    },
-    {
-      "id": "triggerNode-da3b75a6-12f1-45a0-befc-0ecd76ba3193-logNode-dad26d34-e221-4907-967d-40562b992b51",
-      "type": "default",
-      "source": "triggerNode-da3b75a6-12f1-45a0-befc-0ecd76ba3193",
-      "target": "logNode-dad26d34-e221-4907-967d-40562b992b51",
-      "labelBgPadding": [
-        8,
-        4
-      ],
-      "labelBgBorderRadius": 4,
-      "label": "",
-      "labelBgStyle": {
-        "fill": "#009688",
-        "color": "#ffffff",
-        "fillOpacity": 0.7
-      },
-      "labelShowBg": true,
-      "sourceHandle": "source_triggerNode-da3b75a6-12f1-45a0-befc-0ecd76ba3193"
-    },
-    {
-      "id": "logNode-dad26d34-e221-4907-967d-40562b992b51-finishNode-65be031b-85f9-4ea5-9e4c-619769bb251a",
-      "type": "default",
-      "source": "logNode-dad26d34-e221-4907-967d-40562b992b51",
-      "target": "finishNode-65be031b-85f9-4ea5-9e4c-619769bb251a",
-      "labelBgPadding": [
-        8,
-        4
-      ],
-      "labelBgBorderRadius": 4,
-      "label": "",
-      "labelBgStyle": {
-        "fill": "#009688",
-        "color": "#ffffff",
-        "fillOpacity": 0.7
-      },
-      "labelShowBg": true,
-      "sourceHandle": "source_logNode-dad26d34-e221-4907-967d-40562b992b51"
-    }
-  ],
-  "viewport": {
-    "x": 33,
-    "y": 143,
-    "zoom": 1
-  }
+	"nodes": [
+		{
+			"id": "startNode-8cce33a3-3b0a-4436-9ab9-255b7faaf15c",
+			"type": "startNode",
+			"sourcePosition": "right",
+			"position": {
+				"x": 30,
+				"y": 30
+			},
+			"deletable": false,
+			"data": {
+				"id": "startNode-8cce33a3-3b0a-4436-9ab9-255b7faaf15c",
+				"type": "startNode",
+				"position": {
+					"x": 30,
+					"y": 40
+				},
+				"agamaData": {
+					"isTopLevelFlow": true,
+					"basepath": "",
+					"configParams": {},
+					"nodeIcon": "material-symbols:line-start-square",
+					"timeout": "",
+					"inputs": "uidRef",
+					"configs": "",
+					"flowname": "io.jans.casa.inji.link",
+					"displayName": "Linking",
+					"creationDate": "10/02/2026",
+					"hasComment": true,
+					"comment": "This flow is helping flow for plugin. it will trigger com.gluu.agama.main "
+				}
+			},
+			"measured": {
+				"width": 170,
+				"height": 124
+			},
+			"selected": false
+		},
+		{
+			"id": "logNode-5b0fba12-ddf3-41cf-89d6-743bf6b67ff6",
+			"type": "logNode",
+			"position": {
+				"x": 280,
+				"y": 30
+			},
+			"data": {
+				"id": "logNode-5b0fba12-ddf3-41cf-89d6-743bf6b67ff6",
+				"type": "logNode",
+				"position": {
+					"x": 280,
+					"y": 30
+				},
+				"previousNodeId": "startNode-8cce33a3-3b0a-4436-9ab9-255b7faaf15c",
+				"agamaData": {
+					"logMessage": "\"Casa Inji linking flow started for user: %\" uidRef",
+					"logLevel": "info",
+					"nodeIcon": "octicon:log-16",
+					"nodeColor": "",
+					"titleColor": "",
+					"descColor": "",
+					"displayName": "",
+					"hasComment": true,
+					"comment": ""
+				}
+			},
+			"measured": {
+				"width": 170,
+				"height": 124
+			},
+			"selected": false
+		},
+		{
+			"id": "triggerNode-da3b75a6-12f1-45a0-befc-0ecd76ba3193",
+			"type": "triggerNode",
+			"position": {
+				"x": 530,
+				"y": 30
+			},
+			"data": {
+				"id": "triggerNode-da3b75a6-12f1-45a0-befc-0ecd76ba3193",
+				"type": "triggerNode",
+				"position": {
+					"x": 530,
+					"y": 30
+				},
+				"previousNodeId": "logNode-5b0fba12-ddf3-41cf-89d6-743bf6b67ff6",
+				"agamaData": {
+					"nodeIcon": "fluent-mdl2:trigger-approval",
+					"flowFileName": "com.gluu.agama.inji.main",
+					"arguments": [
+						"uidRef"
+					],
+					"asssignedVariableName": "result",
+					"exceptionVariableField": "",
+					"nodeColor": "",
+					"titleColor": "",
+					"descColor": "",
+					"displayName": "",
+					"hasComment": true,
+					"comment": "Call the main verification flow",
+					"overrides": []
+				}
+			},
+			"measured": {
+				"width": 170,
+				"height": 124
+			},
+			"selected": true
+		},
+		{
+			"id": "logNode-dad26d34-e221-4907-967d-40562b992b51",
+			"type": "logNode",
+			"position": {
+				"x": 780,
+				"y": 30
+			},
+			"data": {
+				"id": "logNode-dad26d34-e221-4907-967d-40562b992b51",
+				"type": "logNode",
+				"position": {
+					"x": 780,
+					"y": 30
+				},
+				"previousNodeId": "triggerNode-da3b75a6-12f1-45a0-befc-0ecd76ba3193",
+				"agamaData": {
+					"logMessage": "\"Casa Inji linking completed, returning uidRef\"",
+					"logLevel": "info",
+					"nodeIcon": "octicon:log-16",
+					"nodeColor": "",
+					"titleColor": "",
+					"descColor": "",
+					"displayName": "",
+					"hasComment": true,
+					"comment": "Always finish with the uidRef for successful linking\nEven if the main flow returns something else, we return the uidRef"
+				}
+			},
+			"measured": {
+				"width": 170,
+				"height": 124
+			},
+			"selected": false
+		},
+		{
+			"id": "finishNode-65be031b-85f9-4ea5-9e4c-619769bb251a",
+			"type": "finishNode",
+			"position": {
+				"x": 1030,
+				"y": 30
+			},
+			"data": {
+				"id": "finishNode-65be031b-85f9-4ea5-9e4c-619769bb251a",
+				"type": "finishNode",
+				"position": {
+					"x": 1030,
+					"y": 30
+				},
+				"previousNodeId": "logNode-dad26d34-e221-4907-967d-40562b992b51",
+				"agamaData": {
+					"nodeColor": "",
+					"titleColor": "",
+					"descColor": "",
+					"displayName": "",
+					"hasComment": true,
+					"comment": "",
+					"flowfilename": "",
+					"returnVariable": "{ userId: uidRef}",
+					"finishMode": "withSuccess",
+					"nodeIcon": "material-symbols:line-end-square-rounded"
+				}
+			},
+			"measured": {
+				"width": 170,
+				"height": 124
+			},
+			"selected": false
+		}
+	],
+	"edges": [
+		{
+			"id": "startNode-8cce33a3-3b0a-4436-9ab9-255b7faaf15c-logNode-5b0fba12-ddf3-41cf-89d6-743bf6b67ff6",
+			"type": "default",
+			"source": "startNode-8cce33a3-3b0a-4436-9ab9-255b7faaf15c",
+			"target": "logNode-5b0fba12-ddf3-41cf-89d6-743bf6b67ff6",
+			"labelBgPadding": [
+				8,
+				4
+			],
+			"labelBgBorderRadius": 4,
+			"label": "",
+			"labelBgStyle": {
+				"fill": "#009688",
+				"color": "#ffffff",
+				"fillOpacity": 0.7
+			},
+			"labelShowBg": true,
+			"sourceHandle": "source_startNode-8cce33a3-3b0a-4436-9ab9-255b7faaf15c"
+		},
+		{
+			"id": "logNode-5b0fba12-ddf3-41cf-89d6-743bf6b67ff6-triggerNode-da3b75a6-12f1-45a0-befc-0ecd76ba3193",
+			"type": "default",
+			"source": "logNode-5b0fba12-ddf3-41cf-89d6-743bf6b67ff6",
+			"target": "triggerNode-da3b75a6-12f1-45a0-befc-0ecd76ba3193",
+			"labelBgPadding": [
+				8,
+				4
+			],
+			"labelBgBorderRadius": 4,
+			"label": "",
+			"labelBgStyle": {
+				"fill": "#009688",
+				"color": "#ffffff",
+				"fillOpacity": 0.7
+			},
+			"labelShowBg": true,
+			"sourceHandle": "source_logNode-5b0fba12-ddf3-41cf-89d6-743bf6b67ff6"
+		},
+		{
+			"id": "triggerNode-da3b75a6-12f1-45a0-befc-0ecd76ba3193-logNode-dad26d34-e221-4907-967d-40562b992b51",
+			"type": "default",
+			"source": "triggerNode-da3b75a6-12f1-45a0-befc-0ecd76ba3193",
+			"target": "logNode-dad26d34-e221-4907-967d-40562b992b51",
+			"labelBgPadding": [
+				8,
+				4
+			],
+			"labelBgBorderRadius": 4,
+			"label": "",
+			"labelBgStyle": {
+				"fill": "#009688",
+				"color": "#ffffff",
+				"fillOpacity": 0.7
+			},
+			"labelShowBg": true,
+			"sourceHandle": "source_triggerNode-da3b75a6-12f1-45a0-befc-0ecd76ba3193"
+		},
+		{
+			"id": "logNode-dad26d34-e221-4907-967d-40562b992b51-finishNode-65be031b-85f9-4ea5-9e4c-619769bb251a",
+			"type": "default",
+			"source": "logNode-dad26d34-e221-4907-967d-40562b992b51",
+			"target": "finishNode-65be031b-85f9-4ea5-9e4c-619769bb251a",
+			"labelBgPadding": [
+				8,
+				4
+			],
+			"labelBgBorderRadius": 4,
+			"label": "",
+			"labelBgStyle": {
+				"fill": "#009688",
+				"color": "#ffffff",
+				"fillOpacity": 0.7
+			},
+			"labelShowBg": true,
+			"sourceHandle": "source_logNode-dad26d34-e221-4907-967d-40562b992b51"
+		}
+	],
+	"viewport": {
+		"x": 0,
+		"y": 0,
+		"zoom": 1
+	}
 }
