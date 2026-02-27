@@ -77,7 +77,6 @@
                 }
             }
         },
-        "io.jans.casa.inji.link": {},
         "code": {},
         "com.gluu.agama.inji.register": {
             "injiWebBaseURL": "https://injiweb.collab.mosip.net",
