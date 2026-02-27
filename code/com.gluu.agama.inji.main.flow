@@ -1,8 +1,11 @@
-Flow com.gluu.agama.inji.verifyCredential
+// This is the main flow, it will trigger 
+// com.gluu.agama.inji.register
+// com.gluu.agama.inji.authenticate flow
+Flow com.gluu.agama.inji.main
      Basepath ""
      Configs conf
      Inputs uidRef
-// Flow Starting
+// Main orchestrator flow for Inji wallet verification
 Log "@info Start executing Agama-Inji wallet flow...  with input param %" uidRef
 actualUidRef = null
 When uidRef is not null
@@ -15,7 +18,7 @@ When uidRef is not null
           actualUidRef = uidRef
 // Feedback message
 feedback = {}
-// Max repeate
+//  Max repeate
 Repeat 3 times max
      // Create an instance of Agma-inji verification Service
      agamaInjiVerificationService = Call org.gluu.agama.inji.AgamaInjiVerificationService#getInstance conf
@@ -27,7 +30,7 @@ Repeat 3 times max
           Log "@info The service has been verified"
           // Construct OpenID4VP Request url for RFAC call
           rfacUrl = Call agamaInjiVerificationService buildInjiWebAuthorizationUrl verificationResult.requestId verificationResult.transactionId
-          // Making RFAC call
+          //  Making RFAC call
           Log "@info Making RFAC call to Inji web  app. URL is : %"  rfacUrl
           // Inji web app response
           resultFromApp = RFAC rfacUrl
@@ -45,48 +48,23 @@ Repeat 3 times max
                When vcUserInfo is not null
                     // User info extracted from VC
                     Log "@info User info extracted from VC"
-                    When actualUidRef is null
-                         existingUser = Call agamaInjiVerificationService checkUserExists vcUserInfo.mail
+                    // Try to authenticate existing user
+                    authResult = Trigger com.gluu.agama.inji.authenticate vcUserInfo actualUidRef
+                    When authResult.success is true
+                         // User authenticated successfully"
+                         Log "@info User authenticated successfully"
+                         Finish authResult
                     Otherwise
-                         existingUser = Call agamaInjiVerificationService checkUserExists vcUserInfo.mail actualUidRef
-                    Log "@info Checking user exists or not "
-                    When existingUser is not null
-                         // User already registered, log them in
-                         Log "@info User already registered, logging in"
-                         // Flow finish successfully
-                         it_ngcoq = {success:true, data: { userId: existingUser.uid, mail: existingUser.mail, displayName: existingUser.displayName, givenName: existingUser.givenName}}
-                         Finish it_ngcoq
-                    Otherwise
-                         // showing form
-                         Log "@info Showing user registration form with data : %" vcUserInfo
-                         // Show user setup page to review info and set password
-                         userSetupData = RRF "usersetup.ftlh" vcUserInfo
-                         // Check if password provided
-                         When userSetupData.password is not null
-                              Log "@info Creating user with provided data and password"
-                              // OnBoard User to Jans Server with all data including password
-                              user = Call agamaInjiVerificationService onboardUser userSetupData userSetupData.password
-                              // If user is not null
-                              When user is not null
-                                   // user onboard success
-                                   Log "@info User onboard success with password"
-                                   // Acknowledge
-                                   ack = RRF "acknowledge.ftlh" 
-                                   // Flow finish successfully
-                                   it_gttkb = {success:true, data: { userId: user.uid, mail: user.mail, displayName: user.displayName, givenName: user.givenName}}
-                                   Finish it_gttkb
-                              Otherwise
-                                   // Failed to onboard user
-                                   Log "@error Failed to onboard use"
-                                   feedback.errorMessage = "Failed to create user account"
-                                   // show error
-                                   RRF "error.ftlh" feedback
+                         // User not found, trigger registration flow
+                         Log "@info User not found, starting registration"
+                         regResult = Trigger com.gluu.agama.inji.register vcUserInfo
+                         When regResult.success is true
+                              // Registration successful
+                              Log "@info Registration successful"
+                              Finish regResult
                          Otherwise
-                              // Password not provided
-                              Log "@error Password not provided"
-                              feedback.errorMessage = "Password is required"
-                              // show error
-                              RRF "error.ftlh" feedback
+                              // Registration failed, continue retry loop
+                              Log "@info Registration failed"
                Otherwise
                     // Failed to extract user info
                     Log "@info Failed to extract user info from VC"
@@ -108,8 +86,8 @@ Repeat 3 times max
           feedback.errorMessage = verificationResult.message
           // Showing error
           RRF "error.ftlh" feedback
-// Max tries 
+// Max tries
 Log "@info You've reached the max tries"
 // Finish with error
-it_bypet = {success:false, error: "You've reached max tries."}
-Finish it_bypet
+it_ugrtz = {success:false, error: "You've reached max tries."}
+Finish it_ugrtz
