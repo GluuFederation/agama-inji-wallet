@@ -8,8 +8,7 @@ Log "@info Starting authentication flow for existing user"
 actualUidRef = null
 When uidRef is not null
      actualUidRef = uidRef
-//  Create service instance
-agamaInjiVerificationService = Call org.gluu.agama.inji.AgamaInjiVerificationService#getInstance conf
+Log "@info Authentication flow "
 //  Check if user exists
 When actualUidRef is null
      existingUser = Call agamaInjiVerificationService checkUserExists vcUserInfo.mail
@@ -19,10 +18,10 @@ Log "@info Checking user exists or not"
 When existingUser is not null
      //  User already registered, log them in
      Log "@info User already registered, logging in"
-     it_bcdgd = {success:true, data: { userId: existingUser.uid, mail: existingUser.mail, displayName: existingUser.displayName, givenName: existingUser.givenName}}
-     Finish it_bcdgd
+     it_nfolr = {success:true, data: { userId: existingUser.uid, mail: existingUser.mail, displayName: existingUser.displayName, givenName: existingUser.givenName}}
+     Finish it_nfolr
 Otherwise
      //  User not found
      Log "@info User not found, authentication failed"
-     it_aqjoe = {success:false, error: "User not found"}
-     Finish it_aqjoe
+     it_iflpj = {success:false, error: "User not found"}
+     Finish it_iflpj
