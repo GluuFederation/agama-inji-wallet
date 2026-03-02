@@ -89,7 +89,7 @@
 					},
 					"nodeIcon": "material-symbols:line-start-square",
 					"timeout": "",
-					"inputs": "vcUserInfo",
+					"inputs": "agamaInjiVerificationService vcUserInfo",
 					"configs": "conf",
 					"displayName": "",
 					"hasComment": true,
