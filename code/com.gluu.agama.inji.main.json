@@ -102,7 +102,7 @@
 				"width": 170,
 				"height": 124
 			},
-			"selected": true
+			"selected": false
 		},
 		{
 			"id": "logNode-23667f98-3a3d-403e-9a4c-eb508c81257a",
@@ -1023,6 +1023,7 @@
 					"nodeIcon": "fluent-mdl2:trigger-approval",
 					"flowFileName": "com.gluu.agama.inji.authenticate",
 					"arguments": [
+						"agamaInjiVerificationService",
 						"vcUserInfo",
 						"actualUidRef"
 					],
@@ -1041,7 +1042,7 @@
 				"width": 170,
 				"height": 124
 			},
-			"selected": false
+			"selected": true
 		},
 		{
 			"id": "whenNode-6e571754-08dd-4aae-877c-1f332f401889",
@@ -2618,8 +2619,8 @@
 		}
 	],
 	"viewport": {
-		"x": 0,
-		"y": 0,
+		"x": -4229,
+		"y": -154,
 		"zoom": 1
 	}
 }
