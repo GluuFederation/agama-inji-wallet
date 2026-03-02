@@ -2,7 +2,7 @@
 Flow com.gluu.agama.inji.register
      Basepath ""
      Configs conf
-     Inputs vcUserInfo
+     Inputs agamaInjiVerificationService vcUserInfo
 // Flow for registering new users
 Log "@info Starting registration flow for new user"
 feedback = {}
@@ -23,21 +23,21 @@ When userSetupData is not null
           // Acknowledge
           ack = RRF "acknowledge.ftlh" 
           // Flow finish successfully
-          it_afuyl = {success:true, data: { userId: user.uid, mail: user.mail, displayName: user.displayName, givenName: user.givenName}}
-          Finish it_afuyl
+          it_dktha = {success:true, data: { userId: user.uid, mail: user.mail, displayName: user.displayName, givenName: user.givenName}}
+          Finish it_dktha
      Otherwise
           // Failed to onboard user
           Log "@info Failed to onboard user"
           feedback.errorMessage = "Failed to create user account"
           // show error
           RRF "error.ftlh" feedback
-          it_bxocq = {success:false, error: "Password is required"}
-          Finish it_bxocq
+          it_fsjal = {success:false, error: "Password is required"}
+          Finish it_fsjal
 Otherwise
      // Password not provided"
      Log "@info Password not provided"
      feedback.errorMessage = "Password is required"
      // Show error
      RRF "error.ftlh" feedback
-     it_wrlnn = {success:false, error: "Password is required"}
-     Finish it_wrlnn
+     it_xsqrz = {success:false, error: "Password is required"}
+     Finish it_xsqrz
