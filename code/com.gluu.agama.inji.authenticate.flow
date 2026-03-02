@@ -18,10 +18,10 @@ Log "@info Checking user exists or not"
 When existingUser is not null
      //  User already registered, log them in
      Log "@info User already registered, logging in"
-     it_nfolr = {success:true, data: { userId: existingUser.uid, mail: existingUser.mail, displayName: existingUser.displayName, givenName: existingUser.givenName}}
-     Finish it_nfolr
+     it_bwjcg = {success:true, data: { userId: existingUser.uid, mail: existingUser.mail, displayName: existingUser.displayName, givenName: existingUser.givenName}}
+     Finish it_bwjcg
 Otherwise
      //  User not found
      Log "@info User not found, authentication failed"
-     it_iflpj = {success:false, error: "User not found"}
-     Finish it_iflpj
+     it_elfcv = {success:false, error: "User not found"}
+     Finish it_elfcv
