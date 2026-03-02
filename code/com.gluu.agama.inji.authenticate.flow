@@ -2,7 +2,7 @@
 Flow com.gluu.agama.inji.authenticate
      Basepath ""
      Configs conf
-     Inputs vcUserInfo uidRef
+     Inputs agamaInjiVerificationService vcUserInfo uidRef
 //  Flow for authenticating existing users
 Log "@info Starting authentication flow for existing user"
 actualUidRef = null
@@ -19,10 +19,10 @@ Log "@info Checking user exists or not"
 When existingUser is not null
      //  User already registered, log them in
      Log "@info User already registered, logging in"
-     it_bgtfh = {success:true, data: { userId: existingUser.uid, mail: existingUser.mail, displayName: existingUser.displayName, givenName: existingUser.givenName}}
-     Finish it_bgtfh
+     it_bcdgd = {success:true, data: { userId: existingUser.uid, mail: existingUser.mail, displayName: existingUser.displayName, givenName: existingUser.givenName}}
+     Finish it_bcdgd
 Otherwise
      //  User not found
      Log "@info User not found, authentication failed"
-     it_bhcik = {success:false, error: "User not found"}
-     Finish it_bhcik
+     it_aqjoe = {success:false, error: "User not found"}
+     Finish it_aqjoe
