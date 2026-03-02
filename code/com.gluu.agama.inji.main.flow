@@ -57,7 +57,7 @@ Repeat 3 times max
                     Otherwise
                          // User not found, trigger registration flow
                          Log "@info User not found, starting registration"
-                         regResult = Trigger com.gluu.agama.inji.register vcUserInfo
+                         regResult = Trigger com.gluu.agama.inji.register agamaInjiVerificationService vcUserInfo
                          When regResult.success is true
                               // Registration successful
                               Log "@info Registration successful"
@@ -89,5 +89,5 @@ Repeat 3 times max
 // Max tries
 Log "@info You've reached the max tries"
 // Finish with error
-it_ukvfc = {success:false, error: "You've reached max tries."}
-Finish it_ukvfc
+it_dlrvo = {success:false, error: "You've reached max tries."}
+Finish it_dlrvo
