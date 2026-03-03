@@ -19,78 +19,11 @@
 				"agamaData": {
 					"isTopLevelFlow": true,
 					"basepath": "",
-					"configParams": {
-						"injiWebBaseURL": "https://injiweb.collab.mosip.net",
-						"injiVerifyBaseURL": "https://injiverify.collab.mosip.net",
-						"agamaCallBackUrl": "https://mosip-demo.gluu.info/jans-auth/fl/callback",
-						"clientId": "agama-app",
-						"credentialMappings": [
-							{
-								"credentialType": "NID",
-								"vcToGluuMapping": {
-									"fullName": "displayName",
-									"phone": "mobile",
-									"gender": "gender",
-									"email": "mail",
-									"dateOfBirth": "birthdate"
-								}
-							}
-						],
-						"presentationDefinition": {
-							"id": "c4822b58-7fb4-454e-b827-f8758fe27f9a",
-							"purpose": "Relying party is requesting your digital ID for the purpose of Self-Authentication",
-							"format": {
-								"ldp_vc": {
-									"proof_type": [
-										"Ed25519Signature2020"
-									]
-								}
-							},
-							"input_descriptors": [
-								{
-									"id": "id card credential",
-									"format": {
-										"ldp_vc": {
-											"proof_type": [
-												"Ed25519Signature2020",
-												"RsaSignature2018"
-											]
-										}
-									},
-									"constraints": {
-										"fields": [
-											{
-												"path": [
-													"$.type"
-												],
-												"filter": {
-													"type": "object",
-													"pattern": "MOSIPVerifiableCredential"
-												}
-											}
-										]
-									}
-								}
-							]
-						},
-						"clientMetadata": {
-							"client_name": "Agama Application",
-							"logo_uri": "https://mosip.github.io/inji-config/logos/StayProtectedInsurance.png",
-							"vp_formats": {
-								"ldp_vp": {
-									"proof_type": [
-										"Ed25519Signature2018",
-										"Ed25519Signature2020",
-										"RsaSignature2018"
-									]
-								}
-							}
-						}
-					},
+					"configParams": {},
 					"nodeIcon": "material-symbols:line-start-square",
 					"timeout": "",
-					"inputs": "vcUserInfo",
-					"configs": "conf",
+					"inputs": "agamaInjiVerificationService vcUserInfo",
+					"configs": "",
 					"displayName": "",
 					"hasComment": true,
 					"comment": "Registration ",
@@ -177,50 +110,10 @@
 			"selected": false
 		},
 		{
-			"id": "callNode-3ba6fb5c-0b31-4934-8af7-c08d5166647c",
-			"type": "callNode",
-			"position": {
-				"x": 780,
-				"y": 40
-			},
-			"data": {
-				"id": "callNode-3ba6fb5c-0b31-4934-8af7-c08d5166647c",
-				"type": "callNode",
-				"position": {
-					"x": 780,
-					"y": 40
-				},
-				"previousNodeId": "assignmentNode-24e71146-2e7c-4e3f-bbc7-19ce76b7fdd2",
-				"agamaData": {
-					"javaClassName": "org.gluu.agama.inji.AgamaInjiVerificationService",
-					"javaMethodName": "getInstance",
-					"javaVariableName": "",
-					"exceptionVariableField": "",
-					"callType": "Call static method",
-					"arguments": [
-						"conf"
-					],
-					"nodeIcon": "material-symbols:code",
-					"nodeColor": "",
-					"titleColor": "",
-					"descColor": "",
-					"displayName": "",
-					"hasComment": true,
-					"comment": "Create service instance",
-					"asssignedVariableName": "agamaInjiVerificationService"
-				}
-			},
-			"measured": {
-				"width": 170,
-				"height": 124
-			},
-			"selected": false
-		},
-		{
 			"id": "logNode-8e61d8c3-2808-4a03-a2b7-746093ffe6f9",
 			"type": "logNode",
 			"position": {
-				"x": 1030,
+				"x": 780,
 				"y": 40
 			},
 			"data": {
@@ -230,7 +123,7 @@
 					"x": 1030,
 					"y": 40
 				},
-				"previousNodeId": "callNode-3ba6fb5c-0b31-4934-8af7-c08d5166647c",
+				"previousNodeId": "assignmentNode-24e71146-2e7c-4e3f-bbc7-19ce76b7fdd2",
 				"agamaData": {
 					"logMessage": "\"Showing user registration form with data : %\" vcUserInfo",
 					"logLevel": "info",
@@ -253,7 +146,7 @@
 			"id": "rrfNode-cb271a5e-13f1-42d5-9729-18796e1ae0a2",
 			"type": "rrfNode",
 			"position": {
-				"x": 1280,
+				"x": 1030,
 				"y": 40
 			},
 			"data": {
@@ -288,7 +181,7 @@
 			"id": "whenNode-b2cae871-2d80-4c79-8cb9-9c49bf2532fa",
 			"type": "whenNode",
 			"position": {
-				"x": 1530,
+				"x": 1280,
 				"y": 98
 			},
 			"data": {
@@ -331,7 +224,7 @@
 			"id": "logNode-539d9e9e-da89-477b-97c5-d67d8e62456b",
 			"type": "logNode",
 			"position": {
-				"x": 1780,
+				"x": 1530,
 				"y": 298
 			},
 			"data": {
@@ -365,7 +258,7 @@
 			"id": "logNode-5bf9463d-8209-481f-860e-75770c935e26",
 			"type": "logNode",
 			"position": {
-				"x": 1780,
+				"x": 1530,
 				"y": -152
 			},
 			"data": {
@@ -399,7 +292,7 @@
 			"id": "callNode-d0812e5b-4d45-40d4-87a0-16970324d678",
 			"type": "callNode",
 			"position": {
-				"x": 2030,
+				"x": 1780,
 				"y": 298
 			},
 			"data": {
@@ -440,7 +333,7 @@
 			"id": "whenNode-d47cae2a-bf5e-4de2-942b-8ef62113ae4c",
 			"type": "whenNode",
 			"position": {
-				"x": 2280,
+				"x": 2030,
 				"y": 356
 			},
 			"data": {
@@ -482,7 +375,7 @@
 			"id": "logNode-a292a97a-a88e-4ab9-bc5c-7cc6facb4671",
 			"type": "logNode",
 			"position": {
-				"x": 2530,
+				"x": 2280,
 				"y": 556
 			},
 			"data": {
@@ -516,7 +409,7 @@
 			"id": "rrfNode-491e5c3f-2bba-4d87-9180-f7677125d7d4",
 			"type": "rrfNode",
 			"position": {
-				"x": 2780,
+				"x": 2530,
 				"y": 556
 			},
 			"data": {
@@ -550,7 +443,7 @@
 			"id": "finishNode-9dd7c4fc-376c-421b-b44a-a5bdc03b711a",
 			"type": "finishNode",
 			"position": {
-				"x": 3030,
+				"x": 2780,
 				"y": 556
 			},
 			"data": {
@@ -584,7 +477,7 @@
 			"id": "logNode-6344bc7d-02ce-419b-b7ab-68f5da7b70c6",
 			"type": "logNode",
 			"position": {
-				"x": 2530,
+				"x": 2280,
 				"y": 106
 			},
 			"data": {
@@ -618,7 +511,7 @@
 			"id": "assignmentNode-e0f3a798-e2e1-4602-8b83-8deeed7c0bd8",
 			"type": "assignmentNode",
 			"position": {
-				"x": 2780,
+				"x": 2530,
 				"y": 106
 			},
 			"data": {
@@ -656,7 +549,7 @@
 			"id": "rrfNode-2ef5c219-e6cf-4b57-9669-766671371c9f",
 			"type": "rrfNode",
 			"position": {
-				"x": 3030,
+				"x": 2780,
 				"y": 106
 			},
 			"data": {
@@ -691,7 +584,7 @@
 			"id": "finishNode-9a9aa631-0094-4e71-bce0-c0bbac27a3f7",
 			"type": "finishNode",
 			"position": {
-				"x": 3280,
+				"x": 3030,
 				"y": 106
 			},
 			"data": {
@@ -725,7 +618,7 @@
 			"id": "assignmentNode-af0a2b54-1ed2-47db-bbd0-31481c38b555",
 			"type": "assignmentNode",
 			"position": {
-				"x": 2030,
+				"x": 1780,
 				"y": -152
 			},
 			"data": {
@@ -763,7 +656,7 @@
 			"id": "rrfNode-aa12b909-9060-40a0-aeef-02c87e640da3",
 			"type": "rrfNode",
 			"position": {
-				"x": 2280,
+				"x": 2030,
 				"y": -152
 			},
 			"data": {
@@ -798,7 +691,7 @@
 			"id": "finishNode-9bbd389c-281d-4f02-817b-1c6d68e9e2b5",
 			"type": "finishNode",
 			"position": {
-				"x": 2530,
+				"x": 2280,
 				"y": -152
 			},
 			"data": {
@@ -867,44 +760,6 @@
 			},
 			"labelShowBg": true,
 			"sourceHandle": "source_logNode-6ee27945-0c27-417c-bde1-c75cfd1824ce"
-		},
-		{
-			"id": "assignmentNode-24e71146-2e7c-4e3f-bbc7-19ce76b7fdd2-callNode-3ba6fb5c-0b31-4934-8af7-c08d5166647c",
-			"type": "default",
-			"source": "assignmentNode-24e71146-2e7c-4e3f-bbc7-19ce76b7fdd2",
-			"target": "callNode-3ba6fb5c-0b31-4934-8af7-c08d5166647c",
-			"labelBgPadding": [
-				8,
-				4
-			],
-			"labelBgBorderRadius": 4,
-			"label": "",
-			"labelBgStyle": {
-				"fill": "#009688",
-				"color": "#ffffff",
-				"fillOpacity": 0.7
-			},
-			"labelShowBg": true,
-			"sourceHandle": "source_assignmentNode-24e71146-2e7c-4e3f-bbc7-19ce76b7fdd2"
-		},
-		{
-			"id": "callNode-3ba6fb5c-0b31-4934-8af7-c08d5166647c-logNode-8e61d8c3-2808-4a03-a2b7-746093ffe6f9",
-			"type": "default",
-			"source": "callNode-3ba6fb5c-0b31-4934-8af7-c08d5166647c",
-			"target": "logNode-8e61d8c3-2808-4a03-a2b7-746093ffe6f9",
-			"labelBgPadding": [
-				8,
-				4
-			],
-			"labelBgBorderRadius": 4,
-			"label": "",
-			"labelBgStyle": {
-				"fill": "#009688",
-				"color": "#ffffff",
-				"fillOpacity": 0.7
-			},
-			"labelShowBg": true,
-			"sourceHandle": "source_callNode-3ba6fb5c-0b31-4934-8af7-c08d5166647c"
 		},
 		{
 			"id": "logNode-8e61d8c3-2808-4a03-a2b7-746093ffe6f9-rrfNode-cb271a5e-13f1-42d5-9729-18796e1ae0a2",
@@ -1209,11 +1064,29 @@
 			},
 			"labelShowBg": true,
 			"sourceHandle": "source_rrfNode-aa12b909-9060-40a0-aeef-02c87e640da3"
+		},
+		{
+			"source": "assignmentNode-24e71146-2e7c-4e3f-bbc7-19ce76b7fdd2",
+			"sourceHandle": "source_assignmentNode-24e71146-2e7c-4e3f-bbc7-19ce76b7fdd2",
+			"target": "logNode-8e61d8c3-2808-4a03-a2b7-746093ffe6f9",
+			"targetHandle": "target_logNode-8e61d8c3-2808-4a03-a2b7-746093ffe6f9",
+			"label": "",
+			"labelBgPadding": [
+				8,
+				4
+			],
+			"labelBgBorderRadius": 4,
+			"labelBgStyle": {
+				"fill": "#009688",
+				"color": "#ffffff",
+				"fillOpacity": 0.7
+			},
+			"id": "xy-edge__assignmentNode-24e71146-2e7c-4e3f-bbc7-19ce76b7fdd2source_assignmentNode-24e71146-2e7c-4e3f-bbc7-19ce76b7fdd2-logNode-8e61d8c3-2808-4a03-a2b7-746093ffe6f9target_logNode-8e61d8c3-2808-4a03-a2b7-746093ffe6f9"
 		}
 	],
 	"viewport": {
-		"x": 0,
-		"y": 0,
+		"x": 215,
+		"y": 90,
 		"zoom": 1
 	}
 }

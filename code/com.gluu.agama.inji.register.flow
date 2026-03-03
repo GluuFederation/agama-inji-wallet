@@ -1,13 +1,10 @@
 // Registration 
 Flow com.gluu.agama.inji.register
      Basepath ""
-     Configs conf
-     Inputs vcUserInfo
+     Inputs agamaInjiVerificationService vcUserInfo
 // Flow for registering new users
 Log "@info Starting registration flow for new user"
 feedback = {}
-// Create service instance
-agamaInjiVerificationService = Call org.gluu.agama.inji.AgamaInjiVerificationService#getInstance conf
 // Show user setup page to review info and set password
 Log "@info Showing user registration form with data : %" vcUserInfo
 userSetupData = RRF "usersetup.ftlh" vcUserInfo
@@ -23,21 +20,21 @@ When userSetupData is not null
           // Acknowledge
           ack = RRF "acknowledge.ftlh" 
           // Flow finish successfully
-          it_afuyl = {success:true, data: { userId: user.uid, mail: user.mail, displayName: user.displayName, givenName: user.givenName}}
-          Finish it_afuyl
+          it_iecrn = {success:true, data: { userId: user.uid, mail: user.mail, displayName: user.displayName, givenName: user.givenName}}
+          Finish it_iecrn
      Otherwise
           // Failed to onboard user
           Log "@info Failed to onboard user"
           feedback.errorMessage = "Failed to create user account"
           // show error
           RRF "error.ftlh" feedback
-          it_bxocq = {success:false, error: "Password is required"}
-          Finish it_bxocq
+          it_ulsaz = {success:false, error: "Password is required"}
+          Finish it_ulsaz
 Otherwise
      // Password not provided"
      Log "@info Password not provided"
      feedback.errorMessage = "Password is required"
      // Show error
      RRF "error.ftlh" feedback
-     it_wrlnn = {success:false, error: "Password is required"}
-     Finish it_wrlnn
+     it_rtaxn = {success:false, error: "Password is required"}
+     Finish it_rtaxn

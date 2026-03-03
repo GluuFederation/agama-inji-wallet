@@ -49,7 +49,7 @@ Repeat 3 times max
                     // User info extracted from VC
                     Log "@info User info extracted from VC"
                     // Try to authenticate existing user
-                    authResult = Trigger com.gluu.agama.inji.authenticate vcUserInfo actualUidRef
+                    authResult = Trigger com.gluu.agama.inji.authenticate agamaInjiVerificationService vcUserInfo actualUidRef
                     When authResult.success is true
                          // User authenticated successfully"
                          Log "@info User authenticated successfully"
@@ -57,7 +57,7 @@ Repeat 3 times max
                     Otherwise
                          // User not found, trigger registration flow
                          Log "@info User not found, starting registration"
-                         regResult = Trigger com.gluu.agama.inji.register vcUserInfo
+                         regResult = Trigger com.gluu.agama.inji.register agamaInjiVerificationService vcUserInfo
                          When regResult.success is true
                               // Registration successful
                               Log "@info Registration successful"
@@ -89,5 +89,5 @@ Repeat 3 times max
 // Max tries
 Log "@info You've reached the max tries"
 // Finish with error
-it_ugrtz = {success:false, error: "You've reached max tries."}
-Finish it_ugrtz
+it_dlrvo = {success:false, error: "You've reached max tries."}
+Finish it_dlrvo
