@@ -49,6 +49,51 @@ The flow validates credentials through the Inji Verify backend, extracts user in
 - **Extensible Credential Support**: Architecture supports multiple credential types (NID, TAX info, etc.)
 - **Configurable Attribute Mapping**: Maps credential claims to Janssen user attributes
 
+## Flows
+
+### 1. Main Flow (`com.gluu.agama.inji.main`)
+
+The orchestrator flow that coordinates the entire authentication process:
+
+- Accepts flexible input: `uidRef` (string, Map, or null)
+- Creates VP verification request with Inji Verify backend
+- Builds OpenID4VP authorization URL
+- Makes RFAC call to Inji Web wallet
+- Verifies returned credentials
+- Extracts user information from verified credentials
+- Triggers authentication flow for existing users
+- Triggers registration flow for new users
+
+### 2. Authentication Flow (`com.gluu.agama.inji.authenticate`)
+
+Handles existing user authentication:
+
+- Receives extracted user info and optional uidRef
+- Checks if user exists by email or uidRef
+- Merges new credentials with existing user profile
+- Logs in user directly without password prompt
+- Returns user data on success
+
+### 3. Registration Flow (`com.gluu.agama.inji.register`)
+
+Handles new user registration:
+
+- Displays user setup form with extracted NID data
+- Allows users to review and edit information
+- Requires password creation
+- Creates new user account with all attributes
+- Stores complete verifiable credentials
+- Shows acknowledgment page on success
+
+### 4. Casa Flow (`io.jans.casa.inji.casa`)
+
+Integration flow for Janssen Casa:
+
+- Accepts uidRef for existing Casa users
+- Triggers main flow to add credentials to user profile
+- Returns uidRef on completion
+- Enables credential linking from Casa admin panel
+
 ## Flow Sequence
 
 ### 1. Input Processing
@@ -58,29 +103,32 @@ The flow validates credentials through the Inji Verify backend, extracts user in
 - If input is null, flow proceeds with credential-based authentication only
 
 ### 2. Verification Request
-- Agama flow creates a VP (Verifiable Presentation) verification request
+- Creates VP (Verifiable Presentation) verification request
 - Sends request to Inji Verify backend with presentation definition
+- Receives `requestId` and `transactionId` for tracking
 
 ### 3. Authorization & Credential Presentation
 - Constructs OpenID4VP authorization URL for Inji Web
 - RFAC call redirects user to Inji Web wallet application
 - User selects and presents their credential (e.g., NID) from wallet
+- User returns to Janssen via callback URL
 
 ### 4. Credential Verification
-- Backend validates the presented credential
-- Verifies transaction ID and request ID status
+- Validates the presented credential via Inji Verify backend
+- Checks request ID status (expects `VP_SUBMITTED`)
+- Checks transaction ID status (expects `SUCCESS`)
 - Extracts complete verifiable credential data
 
 ### 5. Credential Storage & Type Detection
-- System stores complete verifiable credentials in JSONB format
-- Automatically detects credential type (NID, TAX, etc.) based on content:
+- Stores complete verifiable credentials in JSONB format
+- Automatically detects credential type based on content:
   - **NID**: Contains `UIN` field in credentialSubject
   - **TAX**: Contains `taxId` or `taxNumber` fields
   - **Other**: Uses credential type from VC metadata
 - Credentials stored as: `{"NID": {credential_data}, "TAX": {credential_data}}`
 
 ### 6. Attribute Extraction & Mapping
-- Extracts specific attributes from the credential's `credentialSubject`
+- Extracts specific attributes from credential's `credentialSubject`
 - Uses `credentialMappings` configuration to map VC claims to Janssen attributes
 - Example: `fullName` (from NID) → `displayName` (Janssen attribute)
 - Only configured attributes are extracted and used
@@ -96,10 +144,11 @@ The flow validates credentials through the Inji Verify backend, extracts user in
   - Proceeds to profile setup step
 
 ### 8. Profile Setup (New Users Only)
-- Displays setup page with extracted NID attributes
+- Displays `usersetup.ftlh` page with extracted NID attributes
 - User can review and edit the information
 - User must set a password for account creation
-- Editable fields include: name, email, phone, gender, birthdate, etc.
+- Password validation: minimum 8 characters, uppercase, lowercase, and number
+- Editable fields: name, email, phone, gender, birthdate
 
 ### 9. Account Creation
 - Creates new user account with:
@@ -107,10 +156,12 @@ The flow validates credentials through the Inji Verify backend, extracts user in
   - User-provided password
   - Complete verifiable credentials stored in JSONB column
 - User is automatically logged in after creation
+- Shows acknowledgment page
 
 ### 10. Authentication Complete
 - User successfully authenticated into Janssen
 - Session established with user profile data
+- Flow returns success with user information
 
 ## Where To Deploy
 
