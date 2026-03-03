@@ -1,0 +1,12 @@
+//  Paste your Agama DSL code bellow.
+Flow io.jans.casa.inji.casa
+     Basepath ""
+     Inputs uidRef
+//  Paste your Agama DSL code bellow.
+Log "@info Casa Inji linking flow started for user: %" uidRef
+//  Call the main verification flow
+result = Trigger com.gluu.agama.inji.main uidRef
+//  Even if the main flow returns something else, we return the uidRef
+Log "@info Casa Inji linking completed, returning uidRef"
+it_bfhry = {success:true, data: { userId: uidRef}}
+Finish it_bfhry
