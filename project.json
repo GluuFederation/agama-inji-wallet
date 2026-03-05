@@ -148,7 +148,8 @@
                 }
             }
         },
-        "io.jans.casa.inji.casa": {}
+        "io.jans.casa.inji.casa": {},
+        "org.gluu.demo.mosip": {}
     },
     "name": "agama-inji-wallet"
 }
