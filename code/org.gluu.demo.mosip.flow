@@ -1,2 +1,7 @@
 Flow org.gluu.demo.mosip
      Basepath ""
+max = Repeat 3 times max
+     obj = Trigger io.jans.casa.authn.acctlinking 
+     // User took usual Casa authentication, terminate as such
+     When obj.aborted is null
+          Finish obj
