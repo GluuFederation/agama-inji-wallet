@@ -5,3 +5,4 @@ max = Repeat 3 times max
      // User took usual Casa authentication, terminate as such
      When obj.aborted is null
           Finish obj
+Finish obj
