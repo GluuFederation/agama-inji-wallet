@@ -1,0 +1,5 @@
+Flow __________
+     Basepath ""
+max = Repeat 3 times max
+     obj = Trigger io.jans.casa.authn.acctlinking 
+          Override templates ""blb4x/acctlinking.ftlh"" ""cust-login-acctlinking.ftlh"" 
