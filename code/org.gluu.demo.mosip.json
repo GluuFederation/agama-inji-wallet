@@ -1,36 +1,270 @@
 {
-  "nodes": [
-    {
-      "id": "startNode-6e580a94-8c50-4572-b6df-1238217ddd0c",
-      "type": "startNode",
-      "sourcePosition": "right",
-      "position": {
-        "x": 30,
-        "y": 30
-      },
-      "deletable": false,
-      "data": {
-        "id": "startNode-6e580a94-8c50-4572-b6df-1238217ddd0c",
-        "type": "startNode",
-        "position": {
-          "x": 30,
-          "y": 40
-        },
-        "agamaData": {
-          "isTopLevelFlow": true,
-          "basepath": "",
-          "configParams": "{}",
-          "nodeIcon": "material-symbols:line-start-square",
-          "timeout": "",
-          "inputs": "",
-          "configs": "",
-          "flowname": "org.gluu.demo.mosip",
-          "displayName": "Demo flow to use in Casa",
-          "creationDate": "06/03/2026",
-          "hasComment": true,
-          "comment": ""
-        }
-      }
-    }
-  ]
+	"nodes": [
+		{
+			"id": "startNode-6e580a94-8c50-4572-b6df-1238217ddd0c",
+			"type": "startNode",
+			"sourcePosition": "right",
+			"position": {
+				"x": 30,
+				"y": 30
+			},
+			"deletable": false,
+			"data": {
+				"id": "startNode-6e580a94-8c50-4572-b6df-1238217ddd0c",
+				"type": "startNode",
+				"position": {
+					"x": 30,
+					"y": 40
+				},
+				"agamaData": {
+					"isTopLevelFlow": true,
+					"basepath": "",
+					"configParams": "{}",
+					"nodeIcon": "material-symbols:line-start-square",
+					"timeout": "",
+					"inputs": "",
+					"configs": "",
+					"flowname": "org.gluu.demo.mosip",
+					"displayName": "Demo flow to use in Casa",
+					"creationDate": "06/03/2026",
+					"hasComment": true,
+					"comment": ""
+				}
+			},
+			"measured": {
+				"width": 170,
+				"height": 124
+			}
+		},
+		{
+			"id": "repeatNode-b9e9fa0c-af92-4a2e-85ad-2595f0f04b9b",
+			"type": "repeatNode",
+			"position": {
+				"x": 280,
+				"y": 30
+			},
+			"data": {
+				"id": "repeatNode-b9e9fa0c-af92-4a2e-85ad-2595f0f04b9b",
+				"type": "repeatNode",
+				"position": {
+					"x": 280,
+					"y": 30
+				},
+				"previousNodeId": "startNode-6e580a94-8c50-4572-b6df-1238217ddd0c",
+				"agamaData": {
+					"nodeIcon": "material-symbols:event-repeat-outline-rounded",
+					"maxIteration": "3",
+					"maxIterationVariableName": "max",
+					"nodeColor": "",
+					"titleColor": "",
+					"descColor": "",
+					"displayName": "",
+					"hasComment": true,
+					"comment": ""
+				}
+			},
+			"measured": {
+				"width": 170,
+				"height": 124
+			},
+			"selected": false
+		},
+		{
+			"id": "triggerNode-3589105e-63db-4301-9119-e8ef1470eea9",
+			"type": "triggerNode",
+			"position": {
+				"x": 530,
+				"y": 280
+			},
+			"data": {
+				"id": "triggerNode-3589105e-63db-4301-9119-e8ef1470eea9",
+				"type": "triggerNode",
+				"position": {
+					"x": 530,
+					"y": 280
+				},
+				"previousNodeId": "repeatNode-b9e9fa0c-af92-4a2e-85ad-2595f0f04b9b",
+				"branching": "repeat",
+				"agamaData": {
+					"nodeIcon": "fluent-mdl2:trigger-approval",
+					"flowFileName": "io.jans.casa.authn.acctlinking",
+					"arguments": [],
+					"asssignedVariableName": "obj",
+					"exceptionVariableField": "",
+					"nodeColor": "",
+					"titleColor": "",
+					"descColor": "",
+					"displayName": "",
+					"hasComment": true,
+					"comment": "",
+					"overrides": []
+				}
+			},
+			"measured": {
+				"width": 170,
+				"height": 124
+			},
+			"selected": false
+		},
+		{
+			"id": "whenNode-31123089-2986-4bfc-a9db-89de71c5908a",
+			"type": "whenNode",
+			"position": {
+				"x": 780,
+				"y": 338
+			},
+			"data": {
+				"id": "whenNode-31123089-2986-4bfc-a9db-89de71c5908a",
+				"type": "whenNode",
+				"position": {
+					"x": 780,
+					"y": 338
+				},
+				"previousNodeId": "triggerNode-3589105e-63db-4301-9119-e8ef1470eea9",
+				"agamaData": {
+					"variableField": "",
+					"valueField": "",
+					"conditionInputField": "",
+					"conditions": [
+						{
+							"variable": "obj.aborted",
+							"operator": "is",
+							"dataValue": "null",
+							"combinator": "none"
+						}
+					],
+					"nodeIcon": "ph:swap",
+					"nodeColor": "",
+					"titleColor": "",
+					"descColor": "",
+					"displayName": "",
+					"hasComment": true,
+					"comment": "User took usual Casa authentication, terminate as such"
+				}
+			},
+			"measured": {
+				"width": 110,
+				"height": 60
+			},
+			"selected": false
+		},
+		{
+			"id": "finishNode-60a4056a-005e-463c-b497-630d67ad1d7f",
+			"type": "finishNode",
+			"position": {
+				"x": 1030,
+				"y": 538
+			},
+			"data": {
+				"id": "finishNode-60a4056a-005e-463c-b497-630d67ad1d7f",
+				"type": "finishNode",
+				"position": {
+					"x": 1030,
+					"y": 538
+				},
+				"previousNodeId": "whenNode-31123089-2986-4bfc-a9db-89de71c5908a",
+				"branching": "success",
+				"agamaData": {
+					"nodeColor": "",
+					"titleColor": "",
+					"descColor": "",
+					"displayName": "",
+					"hasComment": true,
+					"comment": "",
+					"flowfilename": "",
+					"returnVariable": "obj",
+					"finishMode": "withVariable",
+					"nodeIcon": "material-symbols:line-end-square-rounded"
+				}
+			},
+			"measured": {
+				"width": 170,
+				"height": 124
+			},
+			"selected": true
+		}
+	],
+	"edges": [
+		{
+			"id": "startNode-6e580a94-8c50-4572-b6df-1238217ddd0c-repeatNode-b9e9fa0c-af92-4a2e-85ad-2595f0f04b9b",
+			"type": "default",
+			"source": "startNode-6e580a94-8c50-4572-b6df-1238217ddd0c",
+			"target": "repeatNode-b9e9fa0c-af92-4a2e-85ad-2595f0f04b9b",
+			"labelBgPadding": [
+				8,
+				4
+			],
+			"labelBgBorderRadius": 4,
+			"label": "",
+			"labelBgStyle": {
+				"fill": "#009688",
+				"color": "#ffffff",
+				"fillOpacity": 0.7
+			},
+			"labelShowBg": true,
+			"sourceHandle": "source_startNode-6e580a94-8c50-4572-b6df-1238217ddd0c"
+		},
+		{
+			"id": "repeatNode-b9e9fa0c-af92-4a2e-85ad-2595f0f04b9b-triggerNode-3589105e-63db-4301-9119-e8ef1470eea9",
+			"type": "default",
+			"source": "repeatNode-b9e9fa0c-af92-4a2e-85ad-2595f0f04b9b",
+			"target": "triggerNode-3589105e-63db-4301-9119-e8ef1470eea9",
+			"labelBgPadding": [
+				8,
+				4
+			],
+			"labelBgBorderRadius": 4,
+			"label": "repeat",
+			"labelBgStyle": {
+				"fill": "#009688",
+				"color": "#ffffff",
+				"fillOpacity": 0.7
+			},
+			"labelShowBg": true,
+			"sourceHandle": "source_repeatNode-b9e9fa0c-af92-4a2e-85ad-2595f0f04b9b_repeat"
+		},
+		{
+			"id": "triggerNode-3589105e-63db-4301-9119-e8ef1470eea9-whenNode-31123089-2986-4bfc-a9db-89de71c5908a",
+			"type": "default",
+			"source": "triggerNode-3589105e-63db-4301-9119-e8ef1470eea9",
+			"target": "whenNode-31123089-2986-4bfc-a9db-89de71c5908a",
+			"labelBgPadding": [
+				8,
+				4
+			],
+			"labelBgBorderRadius": 4,
+			"label": "",
+			"labelBgStyle": {
+				"fill": "#009688",
+				"color": "#ffffff",
+				"fillOpacity": 0.7
+			},
+			"labelShowBg": true,
+			"sourceHandle": "source_triggerNode-3589105e-63db-4301-9119-e8ef1470eea9"
+		},
+		{
+			"id": "whenNode-31123089-2986-4bfc-a9db-89de71c5908a-finishNode-60a4056a-005e-463c-b497-630d67ad1d7f",
+			"type": "default",
+			"source": "whenNode-31123089-2986-4bfc-a9db-89de71c5908a",
+			"target": "finishNode-60a4056a-005e-463c-b497-630d67ad1d7f",
+			"labelBgPadding": [
+				8,
+				4
+			],
+			"labelBgBorderRadius": 4,
+			"label": "Condition met",
+			"labelBgStyle": {
+				"fill": "#009688",
+				"color": "#ffffff",
+				"fillOpacity": 0.7
+			},
+			"labelShowBg": true,
+			"sourceHandle": "source_whenNode-31123089-2986-4bfc-a9db-89de71c5908a_success"
+		}
+	],
+	"viewport": {
+		"x": -245,
+		"y": 2,
+		"zoom": 1
+	}
 }
